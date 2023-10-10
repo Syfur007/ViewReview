@@ -4,7 +4,7 @@
     <style name="App.Starting.Theme" parent="Theme.ViewReview">
         <item name="windowSplashScreenBackground">#FFFF</item>
         TODO: Change the icon
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/onebyzero_icon</item>
         <item name="postSplashScreenTheme">@style/Theme.ViewReview</item>
     </style>
 </resources>

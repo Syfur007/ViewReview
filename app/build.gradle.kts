@@ -69,4 +69,7 @@ dependencies {
 
     //Splash Api
     implementation("androidx.core:core-splashscreen:1.0.1")
+
+    //Compose Foundation
+    implementation("androidx.compose.foundation:foundation:1.5.3")
 }
