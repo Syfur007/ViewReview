@@ -14,9 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.lifecycleScope
 import com.project.viewreview.domain.usecases.AppEntryUseCases
 import com.project.viewreview.presentation.onboarding.OnBoardingScreen
+import com.project.viewreview.presentation.onboarding.OnBoardingViewModel
 import com.project.viewreview.ui.theme.ViewReviewTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -44,12 +46,16 @@ class MainActivity : ComponentActivity() {
                         .background(MaterialTheme.colorScheme.background)
                         .fillMaxSize()
                 ) {
-                    OnBoardingScreen()
+                    val viewModel: OnBoardingViewModel = hiltViewModel()
+                    OnBoardingScreen(
+                        event = viewModel::onEvent
+                    )
                 }
             }
         }
     }
 }
+
 
 @Preview(showBackground = true)
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
@@ -61,7 +67,10 @@ fun GreetingPreview() {
                 .background(MaterialTheme.colorScheme.background)
                 .fillMaxSize()
         ) {
-            OnBoardingScreen()
+            val viewModel: OnBoardingViewModel = hiltViewModel()
+            OnBoardingScreen (
+                event = viewModel::onEvent
+            )
         }
     }
 }

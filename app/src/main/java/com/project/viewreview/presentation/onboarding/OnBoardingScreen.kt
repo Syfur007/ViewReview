@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.project.viewreview.presentation.common.MovieButton
 import com.project.viewreview.presentation.common.MovieTextButton
 import com.project.viewreview.presentation.onboarding.components.OnBoardingPage
@@ -31,7 +32,9 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun OnBoardingScreen() {
+fun OnBoardingScreen(
+    event: (OnBoardingEvent) -> Unit
+) {
     Column(modifier = Modifier.fillMaxSize()) {
         val pagerState = rememberPagerState(initialPage = 0) {
             pages.size
@@ -84,9 +87,9 @@ fun OnBoardingScreen() {
                     text = buttonsState.value[1],
                     onClick = {
                         scope.launch {
-                            if (pagerState.currentPage == 3){
-                                // TODO: Navigate to the main screen and save a value in datastore preferences
-                            }else{
+                            if (pagerState.currentPage == 2){
+                                event(OnBoardingEvent.SaveAppEntry)
+                            } else{
                                 pagerState.animateScrollToPage(
                                     page = pagerState.currentPage + 1
                                 )
@@ -108,6 +111,9 @@ fun OnBoardingScreen() {
 @Composable
 fun OnBoardingScreenPreview() {
     ViewReviewTheme {
-        OnBoardingScreen()
+        val viewModel: OnBoardingViewModel = hiltViewModel()
+        OnBoardingScreen(
+            event = viewModel::onEvent
+        )
     }
 }
