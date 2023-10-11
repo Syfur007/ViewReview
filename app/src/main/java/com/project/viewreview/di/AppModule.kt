@@ -18,7 +18,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideLocalUserManger(
+    fun provideLocalUserManager(
         application: Application
     ): LocalUserManager = LocalUserManagerImpl(context = application)
 
