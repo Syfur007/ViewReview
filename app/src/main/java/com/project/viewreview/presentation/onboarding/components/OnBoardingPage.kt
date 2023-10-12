@@ -21,6 +21,7 @@ import com.project.viewreview.R
 import com.project.viewreview.presentation.onboarding.Page
 import com.project.viewreview.ui.theme.MediumPadding
 import com.project.viewreview.ui.theme.SemiLargePadding
+import com.project.viewreview.ui.theme.SmallPadding
 import com.project.viewreview.ui.theme.ViewReviewTheme
 
 @Composable
@@ -38,20 +39,29 @@ fun OnBoardingPage(
             contentScale = ContentScale.Crop
         )
         Spacer(modifier = Modifier.height(MediumPadding))
-        Text(
-            text = page.title,
-            Modifier.padding(horizontal = SemiLargePadding),
-            style = MaterialTheme.typography.displaySmall,
-            fontWeight = FontWeight.Bold,
-            color = colorResource(id = R.color.display_small)
-        )
-        Text(
-            text = page.description,
-            Modifier.padding(horizontal = SemiLargePadding),
-            style = MaterialTheme.typography.bodyMedium,
-            fontWeight = FontWeight.Bold,
-            color = colorResource(id = R.color.text_medium)
-        )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.6f)
+        ) {
+            Text(
+                text = page.title,
+                Modifier
+                    .padding(horizontal = SemiLargePadding),
+                style = MaterialTheme.typography.displaySmall,
+                fontWeight = FontWeight.Bold,
+                color = colorResource(id = R.color.display_small)
+            )
+            Spacer(modifier = Modifier.height(SmallPadding))
+            Text(
+                text = page.description,
+                Modifier
+                    .padding(horizontal = SemiLargePadding),
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.Bold,
+                color = colorResource(id = R.color.text_medium)
+            )
+        }
     }
 }
 
