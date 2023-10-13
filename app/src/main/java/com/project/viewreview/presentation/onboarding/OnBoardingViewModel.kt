@@ -2,7 +2,7 @@ package com.project.viewreview.presentation.onboarding
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.project.viewreview.domain.usecases.AppEntryUseCases
+import com.project.viewreview.domain.usecases.app_entry.AppEntryUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

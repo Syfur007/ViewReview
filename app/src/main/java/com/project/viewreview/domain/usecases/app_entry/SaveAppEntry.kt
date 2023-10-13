@@ -1,4 +1,4 @@
-package com.project.viewreview.domain.usecases
+package com.project.viewreview.domain.usecases.app_entry
 
 import com.project.viewreview.domain.manager.LocalUserManager
 

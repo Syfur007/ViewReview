@@ -4,6 +4,7 @@ import androidx.compose.ui.unit.dp
 
 
 val SmallCornerRadius = 4.dp
+val VerySmallPadding = 6.dp
 val SmallPadding = 12.dp
 val MediumPadding = 24.dp
 val SemiLargePadding = 36.dp
@@ -11,3 +12,4 @@ val LargePadding = 48.dp
 val ExtraLargePadding = 72.dp
 
 val IndicatorSize = 14.dp
+val IconSize = 20.dp
