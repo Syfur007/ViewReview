@@ -9,4 +9,5 @@ interface MovieRepository {
     fun getTopRatedMovies(): Flow<PagingData<MovieResponse>>
     fun getTrendingMovies(): Flow<PagingData<MovieResponse>>
     fun getPopularMovies(): Flow<PagingData<MovieResponse>>
+    fun searchMovies(searchQuery: String): Flow<PagingData<MovieResponse>>
 }

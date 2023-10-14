@@ -3,25 +3,17 @@ package com.project.viewreview.data.remote
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.project.viewreview.domain.model.MovieResponse
-import com.project.viewreview.util.Constants.API_KEY
+import com.project.viewreview.util.Constants
 
-class MoviePagingSource(
+class SearchPagingSource(
     private val movieApi: MovieApi,
-    private val movieListType: String,
-    private val searchQuery: String = ""
+    private val searchQuery: String
 ):PagingSource<Int, MovieResponse>() {
-
     private var totalMovieCount = 0
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieResponse> {
         val page = params.key ?: 1
         return try {
-            val moviesResponse = when(movieListType) {
-                "popular" -> movieApi.getPopularMovies(page = page, apiKey = API_KEY)
-                "top_rated" -> movieApi.getTopRatedMovies(page = page, apiKey = API_KEY)
-                "trending" -> movieApi.getTrendingMovies(page = page, apiKey = API_KEY)
-                "search" -> movieApi.searchMovies(page = page, apiKey = API_KEY, query = searchQuery)
-                else -> throw IllegalArgumentException("Invalid movie type: $movieListType")
-            }
+            val moviesResponse = movieApi.searchMovies(page = page, apiKey = Constants.API_KEY, query = searchQuery)
             totalMovieCount += moviesResponse.results.size
             val movies = moviesResponse.results.distinctBy { it.id }
             LoadResult.Page(

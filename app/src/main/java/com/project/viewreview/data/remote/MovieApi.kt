@@ -24,4 +24,11 @@ interface MovieApi {
         @Query("api_key") apiKey: String = API_KEY,
         @Query("page") page: Int
     ): MoviesResponse
+
+    @GET("search/movie")
+    suspend fun searchMovies(
+        @Query("api_key") apiKey: String = API_KEY,
+        @Query("page") page: Int,
+        @Query("query") query: String
+    ): MoviesResponse
 }

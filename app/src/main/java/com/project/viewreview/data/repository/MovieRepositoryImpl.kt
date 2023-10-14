@@ -5,6 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.project.viewreview.data.remote.MovieApi
 import com.project.viewreview.data.remote.MoviePagingSource
+import com.project.viewreview.data.remote.SearchPagingSource
 import com.project.viewreview.domain.model.MovieResponse
 import com.project.viewreview.domain.repository.MovieRepository
 import kotlinx.coroutines.flow.Flow
@@ -30,6 +31,13 @@ class MovieRepositoryImpl(
         return Pager(
             config = PagingConfig(pageSize = 10),
             pagingSourceFactory = { MoviePagingSource(movieApi, "popular") }
+        ).flow
+    }
+
+    override fun searchMovies(searchQuery: String): Flow<PagingData<MovieResponse>> {
+        return Pager(
+            config = PagingConfig(pageSize = 10),
+            pagingSourceFactory = { SearchPagingSource(movieApi, searchQuery) }
         ).flow
     }
 

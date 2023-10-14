@@ -10,8 +10,10 @@ import com.project.viewreview.domain.usecases.app_entry.AppEntryUseCases
 import com.project.viewreview.domain.usecases.app_entry.ReadAppEntry
 import com.project.viewreview.domain.usecases.app_entry.SaveAppEntry
 import com.project.viewreview.domain.usecases.movie.GetPopularMovies
+import com.project.viewreview.domain.usecases.movie.GetTopRatedMovies
 import com.project.viewreview.domain.usecases.movie.GetTrendingMovies
 import com.project.viewreview.domain.usecases.movie.MovieUseCases
+import com.project.viewreview.domain.usecases.movie.SearchMovies
 import com.project.viewreview.util.Constants.API_BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -64,7 +66,9 @@ object AppModule {
     ): MovieUseCases {
         return MovieUseCases(
             getPopularMovies = GetPopularMovies(movieRepository),
-            getTrendingMovies = GetTrendingMovies(movieRepository)
+            getTrendingMovies = GetTrendingMovies(movieRepository),
+            getTopRatedMovies = GetTopRatedMovies(movieRepository),
+            searchMovies = SearchMovies(movieRepository)
         )
     }
 
