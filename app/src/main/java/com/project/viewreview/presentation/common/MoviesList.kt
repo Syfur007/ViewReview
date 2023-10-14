@@ -1,6 +1,7 @@
 package com.project.viewreview.presentation.common
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
@@ -69,9 +70,10 @@ fun handlePagingResult(
 @Composable
 private fun ShimmerEffect() {
     LazyVerticalGrid(
+        contentPadding = PaddingValues(horizontal = MediumPadding),
         columns = GridCells.Adaptive(140.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp),
-        horizontalArrangement = Arrangement.spacedBy(10.dp)
+        verticalArrangement = Arrangement.spacedBy(MediumPadding),
+        horizontalArrangement = Arrangement.spacedBy(MediumPadding)
     ) {
         items(10) {
             MovieCardShimmerEffect()

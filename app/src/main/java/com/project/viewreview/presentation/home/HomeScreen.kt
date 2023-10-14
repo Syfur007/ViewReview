@@ -59,6 +59,7 @@ fun HomeScreen(movies: LazyPagingItems<MovieResponse>, navigate: (String) -> Uni
         Spacer(modifier = Modifier.height(MediumPadding))
 
         SearchBar(
+            modifier = Modifier.padding(horizontal = MediumPadding),
             text = "",
             readOnly = true,
             onValueChange = {},
