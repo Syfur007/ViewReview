@@ -2,12 +2,13 @@ package com.project.viewreview.domain.usecases.movie
 
 import com.project.viewreview.domain.model.Movie
 import com.project.viewreview.domain.repository.MovieRepository
-import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class GetMovie(
+class GetMovie @Inject constructor(
     private val movieRepository: MovieRepository,
 ) {
-    operator fun invoke(movieId: Int): Flow<Movie> {
+    suspend operator fun invoke(movieId: Int): Movie {
         return movieRepository.getMovie(movieId = movieId)
     }
 }
+

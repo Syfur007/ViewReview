@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.project.viewreview.domain.model.Movie
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MovieDao {
@@ -17,5 +18,8 @@ interface MovieDao {
     suspend fun delete(movie: Movie)
 
     @Query("SELECT * FROM movie")
-    suspend fun getMovies(): List<Movie>
+    fun getMovies(): Flow<List<Movie>>
+
+    @Query("SELECT * FROM movie WHERE id = :id")
+    suspend fun getMovie(id: Int): Movie?
 }

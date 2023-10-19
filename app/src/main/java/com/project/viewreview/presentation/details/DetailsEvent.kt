@@ -1,7 +1,9 @@
 package com.project.viewreview.presentation.details
 
-sealed class DetailsEvent {
+import com.project.viewreview.domain.model.Movie
 
-    object ToggleBookmark: DetailsEvent()
-    object ToggleFavourite: DetailsEvent()
+sealed class DetailsEvent {
+    data class UpsertDeleteMovie(val movie: Movie) : DetailsEvent()
+
+    object RemoveSideEffect : DetailsEvent()
 }

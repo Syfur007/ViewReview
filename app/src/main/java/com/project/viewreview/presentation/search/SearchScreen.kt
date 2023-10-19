@@ -9,16 +9,16 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.project.viewreview.domain.model.MovieResponse
 import com.project.viewreview.presentation.common.MoviesList
 import com.project.viewreview.presentation.common.SearchBar
-import com.project.viewreview.presentation.navgraph.Route
 import com.project.viewreview.ui.theme.MediumPadding
 
 @Composable
 fun SearchScreen(
     state: SearchState,
     event:(SearchEvent) -> Unit,
-    navigate: (String) -> Unit
+    navigateToDetails: (MovieResponse) -> Unit
 ) {
 
     Column(
@@ -40,9 +40,7 @@ fun SearchScreen(
             MoviesList(
                 modifier = Modifier.padding(horizontal = MediumPadding),
                 movies = movies,
-                onClick = {
-                    navigate(Route.MovieDetailScreen.route)
-                }
+                onClick = navigateToDetails
             )
         }
     }

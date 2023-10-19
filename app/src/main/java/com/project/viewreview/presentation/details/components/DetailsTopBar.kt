@@ -31,11 +31,8 @@ import com.project.viewreview.ui.theme.ViewReviewTheme
 @Composable
 fun DetailsTopBar(
     onBookmarkClick: () -> Unit,
-    onFavouriteClick: () -> Unit,
     onShareClick: () -> Unit,
     onBackClick: () -> Unit,
-    isBookmarked: Boolean = false,
-    isFavourite: Boolean = false,
 ) {
 
     TopAppBar(
@@ -67,21 +64,7 @@ fun DetailsTopBar(
             ) {
                 Icon(
                     painter = painterResource(
-                        id = if (isBookmarked) R.drawable.ic_bookmarked else R.drawable.ic_bookmark
-                    ),
-                    contentDescription = null,
-                    Modifier
-                        .background(color = Black.copy(alpha = 0.25f), shape = CircleShape)
-                        .padding(5.dp),
-                    tint = MaterialTheme.colorScheme.primary,
-                )
-            }
-            IconButton(
-                onClick = onFavouriteClick
-            ) {
-                Icon(
-                    painter = painterResource(
-                        id = if (isFavourite) R.drawable.ic_favorited else R.drawable.ic_favorite
+                        id = R.drawable.ic_bookmark
                     ),
                     contentDescription = null,
                     Modifier
@@ -114,11 +97,9 @@ fun DetailsTopBar(
 fun DetailsTopBar() {
     ViewReviewTheme {
         DetailsTopBar(
-            onFavouriteClick = { /*TODO*/ },
             onShareClick = { /*TODO*/ },
             onBookmarkClick = { /*TODO*/ },
             onBackClick = { /*TODO*/ },
-            isBookmarked = true,
         )
     }
 }

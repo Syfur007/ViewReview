@@ -7,11 +7,19 @@ import com.project.viewreview.util.Constants.API_KEY
 
 class MoviePagingSource(
     private val movieApi: MovieApi,
-    private val movieListType: String,
-    private val searchQuery: String = ""
+    private val movieListType: String
 ):PagingSource<Int, MovieResponse>() {
 
+
+    override fun getRefreshKey(state: PagingState<Int, MovieResponse>): Int? {
+        return state.anchorPosition?.let { anchorPosition ->
+            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
+                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
+        }
+    }
+
     private var totalMovieCount = 0
+
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieResponse> {
         val page = params.key ?: 1
         return try {
@@ -19,7 +27,6 @@ class MoviePagingSource(
                 "popular" -> movieApi.getPopularMovies(page = page, apiKey = API_KEY)
                 "top_rated" -> movieApi.getTopRatedMovies(page = page, apiKey = API_KEY)
                 "trending" -> movieApi.getTrendingMovies(page = page, apiKey = API_KEY)
-                "search" -> movieApi.searchMovies(page = page, apiKey = API_KEY, query = searchQuery)
                 else -> throw IllegalArgumentException("Invalid movie type: $movieListType")
             }
             totalMovieCount += moviesResponse.results.size
@@ -32,12 +39,6 @@ class MoviePagingSource(
         } catch (e: Exception) {
             e.printStackTrace()
             LoadResult.Error(e)
-        }
-    }
-    override fun getRefreshKey(state: PagingState<Int, MovieResponse>): Int? {
-        return state.anchorPosition?.let { anchorPosition ->
-            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
-                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
         }
     }
 }

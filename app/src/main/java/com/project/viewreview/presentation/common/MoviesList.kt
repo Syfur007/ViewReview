@@ -10,8 +10,29 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
+import com.project.viewreview.domain.model.Movie
 import com.project.viewreview.domain.model.MovieResponse
+import com.project.viewreview.presentation.home.common.MovieCard
 import com.project.viewreview.ui.theme.MediumPadding
+
+@Composable
+fun MoviesList(
+    modifier: Modifier = Modifier,
+    movies: List<Movie>,
+    onClick: (Movie) -> Unit
+) {
+    LazyVerticalGrid(
+        modifier = modifier,
+        columns = GridCells.Adaptive(140.dp),
+        verticalArrangement = Arrangement.spacedBy(MediumPadding),
+        horizontalArrangement = Arrangement.spacedBy(MediumPadding)
+    ) {
+        items(movies.size) {
+            val movie = movies[it]
+            MovieCard(movie = movie, onClick = { onClick(movie) })
+        }
+    }
+}
 
 @Composable
 fun MoviesList(

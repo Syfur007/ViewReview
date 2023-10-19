@@ -5,13 +5,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.project.viewreview.domain.usecases.movie.MovieUseCases
+import com.project.viewreview.domain.usecases.movie.SearchMovies
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val movieUseCases: MovieUseCases
+    private val searchMovieUseCases: SearchMovies
 ) : ViewModel() {
 
     private var _state = mutableStateOf(SearchState())
@@ -31,7 +31,7 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun searchMovie() {
-        val movies = movieUseCases.searchMovies(
+        val movies = searchMovieUseCases(
             searchQuery = _state.value.searchQuery
         ).cachedIn(viewModelScope)
         _state.value = _state.value.copy(movies = movies)

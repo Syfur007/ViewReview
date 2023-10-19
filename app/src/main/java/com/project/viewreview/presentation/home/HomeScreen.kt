@@ -1,9 +1,12 @@
 package com.project.viewreview.presentation.home
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
@@ -24,6 +28,7 @@ import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -41,12 +46,18 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.project.viewreview.R
 import com.project.viewreview.domain.model.MovieResponse
 import com.project.viewreview.presentation.common.MoviesList
-import com.project.viewreview.presentation.navgraph.Route
 import com.project.viewreview.ui.theme.MediumPadding
+import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomeScreen(movies: LazyPagingItems<MovieResponse>, navigate: (String) -> Unit) {
+fun HomeScreen(
+    movies: LazyPagingItems<MovieResponse>,
+    state: HomeState,
+    event: (HomeEvent) -> Unit,
+    navigateToSearch: () -> Unit,
+    navigateToDetails: (MovieResponse) -> Unit
+) {
     val titles by remember {
         derivedStateOf {
             if (movies.itemCount > 0) {
@@ -75,9 +86,11 @@ fun HomeScreen(movies: LazyPagingItems<MovieResponse>, navigate: (String) -> Uni
             Icon(
                 imageVector = Icons.Default.Search,
                 contentDescription = null,
-                modifier = Modifier.height(30.dp).clickable {
-                    navigate(Route.SearchScreen.route)
-                },
+                modifier = Modifier
+                    .height(30.dp)
+                    .clickable {
+                        navigateToSearch()
+                    },
                 tint = Color.White,
             )
 
@@ -86,11 +99,14 @@ fun HomeScreen(movies: LazyPagingItems<MovieResponse>, navigate: (String) -> Uni
 
         Spacer(modifier = Modifier.height(MediumPadding))
 
+        val scrollState = rememberScrollState(initial = state.scrollValue)
+
         Text(
             text = titles, modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = MediumPadding)
-                .basicMarquee(), fontSize = 12.sp,
+                .horizontalScroll(scrollState, enabled = false),
+            fontSize = 12.sp,
             color = colorResource(id = R.color.placeholder)
         )
 
@@ -128,39 +144,58 @@ fun HomeScreen(movies: LazyPagingItems<MovieResponse>, navigate: (String) -> Uni
 
         Spacer(modifier = Modifier.height(MediumPadding))
 
+
+        // Update the maxScrollingValue
+        LaunchedEffect(key1 = scrollState.maxValue) {
+            event(HomeEvent.UpdateMaxScrollingValue(scrollState.maxValue))
+        }
+        // Save the state of the scrolling position
+        LaunchedEffect(key1 = scrollState.value) {
+            event(HomeEvent.UpdateScrollValue(scrollState.value))
+        }
+        // Animate the scrolling
+        LaunchedEffect(key1 = state.maxScrollingValue) {
+            delay(500)
+            if (state.maxScrollingValue > 0) {
+                scrollState.animateScrollTo(
+                    value = state.maxScrollingValue,
+                    animationSpec = infiniteRepeatable(
+                        tween(
+                            durationMillis = (state.maxScrollingValue - state.scrollValue) * 50_000 / state.maxScrollingValue,
+                            easing = LinearEasing,
+                            delayMillis = 1000
+                        )
+                    )
+                )
+            }
+        }
+
+
         HorizontalPager(state = pagerState) { index ->
             when (index) {
                 0 -> {
                     MoviesList(
                         modifier = Modifier.padding(horizontal = MediumPadding),
                         movies = movies,
-                        onClick = { navigate(Route.MovieDetailScreen.route) }
+                        onClick = navigateToDetails
                     )
                 }
                 1 -> {
                     MoviesList(
                         modifier = Modifier.padding(horizontal = MediumPadding),
                         movies = movies,
-                        onClick = { navigate(Route.MovieDetailScreen.route) }
+                        onClick = navigateToDetails
                     )
                 }
                 2 -> {
                     MoviesList(
                         modifier = Modifier.padding(horizontal = MediumPadding),
                         movies = movies,
-                        onClick = { navigate(Route.MovieDetailScreen.route) }
+                        onClick = navigateToDetails
                     )
                 }
             }
         }
-
-        Spacer(modifier = Modifier.height(MediumPadding))
-
-        MoviesList(
-            modifier = Modifier.padding(horizontal = MediumPadding),
-            movies = movies,
-            onClick = { navigate(Route.MovieDetailScreen.route) }
-        )
 
     }
 }
@@ -171,6 +206,6 @@ fun HomeScreen(movies: LazyPagingItems<MovieResponse>, navigate: (String) -> Uni
 fun HomeScreenPreview() {
     val viewModel: HomeViewModel = hiltViewModel()
     val movies = viewModel.trendingMovies.collectAsLazyPagingItems()
-    HomeScreen(movies = movies, navigate = {})
+    HomeScreen(movies = movies, navigateToDetails = {}, navigateToSearch = {}, state = HomeState(), event = {})
 }
 

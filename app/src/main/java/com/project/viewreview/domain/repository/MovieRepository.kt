@@ -8,8 +8,18 @@ import kotlinx.coroutines.flow.Flow
 interface MovieRepository {
 
     fun getTopRatedMovies(): Flow<PagingData<MovieResponse>>
+
     fun getTrendingMovies(): Flow<PagingData<MovieResponse>>
+
     fun getPopularMovies(): Flow<PagingData<MovieResponse>>
+
     fun searchMovies(searchQuery: String): Flow<PagingData<MovieResponse>>
-    fun getMovie(movieId: Int): Flow<Movie>
+
+    suspend fun upsertMovie(movie: Movie)
+
+    suspend fun deleteMovie(movie: Movie)
+
+    fun getMovies(): Flow<List<Movie>>
+
+    suspend fun getMovie(movieId: Int): Movie
 }

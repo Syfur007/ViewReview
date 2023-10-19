@@ -1,10 +1,10 @@
-package com.project.viewreview
+package com.project.viewreview.presentation.mainActivity
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.project.viewreview.domain.usecases.app_entry.AppEntryUseCases
+import com.project.viewreview.domain.usecases.app_entry.ReadAppEntry
 import com.project.viewreview.presentation.navgraph.Route
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    appEntryUseCase: AppEntryUseCases
+    private val readAppEntry: ReadAppEntry
 ): ViewModel() {
 
     private val _splashCondition = mutableStateOf(true)
@@ -24,7 +24,7 @@ class MainViewModel @Inject constructor(
     val startDestination: State<String> = _startDestination
 
     init {
-        appEntryUseCase.readAppEntry().onEach { shouldStartFromHomeScreen ->
+        readAppEntry().onEach { shouldStartFromHomeScreen ->
             if(shouldStartFromHomeScreen){
                 _startDestination.value = Route.MovieNavigation.route
             } else{

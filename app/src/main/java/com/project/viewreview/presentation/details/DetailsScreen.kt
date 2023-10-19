@@ -1,6 +1,7 @@
 package com.project.viewreview.presentation.details
 
 import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -17,14 +19,28 @@ import com.project.viewreview.presentation.details.components.DetailsTopBar
 import com.project.viewreview.presentation.details.components.MovieDetails
 import com.project.viewreview.ui.theme.ViewReviewTheme
 import com.project.viewreview.util.Constants.TMDB_BASE_URL
+import com.project.viewreview.util.UIComponent
 
 @Composable
 fun DetailsScreen(
     movie: Movie,
     onEvent: (DetailsEvent) -> Unit,
+    sideEffect: UIComponent?,
     navigateUp: () -> Unit,
 ) {
     val context = LocalContext.current
+
+    LaunchedEffect(key1 = sideEffect) {
+        sideEffect?.let {
+            when(sideEffect){
+                is UIComponent.Toast ->{
+                    Toast.makeText(context, sideEffect.message, Toast.LENGTH_SHORT).show()
+                    onEvent(DetailsEvent.RemoveSideEffect)
+                }
+                else -> Unit
+            }
+        }
+    }
 
     Box(
         Modifier
@@ -37,8 +53,7 @@ fun DetailsScreen(
         MovieDetails(movie = movie, scrollState = scrollState)
 
         DetailsTopBar(
-            onBookmarkClick = { onEvent(DetailsEvent.ToggleBookmark) },
-            onFavouriteClick = { onEvent(DetailsEvent.ToggleFavourite) },
+            onBookmarkClick = { onEvent(DetailsEvent.UpsertDeleteMovie(movie)) },
             onShareClick = {
                 Intent(Intent.ACTION_SEND).also {
                     it.type = "text/plain"
@@ -57,6 +72,6 @@ fun DetailsScreen(
 @Composable
 fun Test() {
     ViewReviewTheme {
-        DetailsScreen(movie = FightClub, onEvent = {}, navigateUp = {})
+        DetailsScreen(movie = FightClub, onEvent = {}, navigateUp = {}, sideEffect = null)
     }
 }
