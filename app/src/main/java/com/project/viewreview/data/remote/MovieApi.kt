@@ -1,6 +1,7 @@
 package com.project.viewreview.data.remote
 
-import com.project.viewreview.data.remote.dto.MoviesResponse
+import com.project.viewreview.data.remote.dto.MovieList
+import com.project.viewreview.domain.model.Movie
 import com.project.viewreview.util.Constants.API_KEY
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -11,24 +12,30 @@ interface MovieApi {
     suspend fun getTopRatedMovies(
         @Query("api_key") apiKey: String = API_KEY,
         @Query("page") page: Int
-    ): MoviesResponse
+    ): MovieList
 
     @GET("trending/movie/week")
     suspend fun getTrendingMovies(
         @Query("api_key") apiKey: String = API_KEY,
         @Query("page") page: Int
-    ): MoviesResponse
+    ): MovieList
 
     @GET("movie/popular")
     suspend fun getPopularMovies(
         @Query("api_key") apiKey: String = API_KEY,
         @Query("page") page: Int
-    ): MoviesResponse
+    ): MovieList
 
     @GET("search/movie")
     suspend fun searchMovies(
         @Query("api_key") apiKey: String = API_KEY,
         @Query("page") page: Int,
         @Query("query") query: String
-    ): MoviesResponse
+    ): MovieList
+
+    @GET("movie/{movie_id}")
+    suspend fun getMovie(
+        @Query("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String = API_KEY
+    ): Movie
 }

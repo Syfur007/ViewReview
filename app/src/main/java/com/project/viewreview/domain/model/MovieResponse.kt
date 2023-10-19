@@ -17,7 +17,7 @@ data class MovieResponse(
     val vote_count: Int
 )
 
-val FightClub = MovieResponse(
+val SniperGRIT = MovieResponse(
     adult = false,
     backdrop_path = "/1DBo2V4KyBWXuagt4JOR2jZJMHB.jpg",
     genre_ids = listOf(28, 53),

@@ -9,9 +9,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val movieUseCases: MovieUseCases
+    movieUseCases: MovieUseCases
 ) : ViewModel() {
 
     val trendingMovies = movieUseCases.getTrendingMovies().cachedIn(viewModelScope)
     val popularMovies = movieUseCases.getPopularMovies().cachedIn(viewModelScope)
+    val topRatedMovies = movieUseCases.getTopRatedMovies().cachedIn(viewModelScope)
 }

@@ -18,20 +18,34 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.lifecycleScope
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.project.viewreview.data.local.MovieDao
+import com.project.viewreview.domain.model.FightClub
 import com.project.viewreview.presentation.navgraph.NavGraph
 import com.project.viewreview.presentation.onboarding.OnBoardingScreen
 import com.project.viewreview.presentation.onboarding.OnBoardingViewModel
 import com.project.viewreview.ui.theme.ViewReviewTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val viewModel by viewModels<MainViewModel>()
 
+    @Inject
+    lateinit var dao: MovieDao
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        lifecycleScope.launch {
+            dao.upsert(FightClub)
+        }
+
+
         installSplashScreen().apply {
             setKeepOnScreenCondition {
                 viewModel.splashCondition.value

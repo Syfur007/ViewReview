@@ -19,11 +19,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.project.viewreview.domain.model.FightClub
+import com.project.viewreview.domain.model.SniperGRIT
 import com.project.viewreview.domain.model.MovieResponse
 import com.project.viewreview.ui.theme.VerySmallPadding
 import com.project.viewreview.ui.theme.ViewReviewTheme
-import com.project.viewreview.util.Constants.IMAGE_BASE_URL
+import com.project.viewreview.util.Constants.IMAGE_500_URL
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,7 +40,7 @@ fun MovieCard(
     ) {
 
         AsyncImage(
-            model = ImageRequest.Builder(context).data(IMAGE_BASE_URL + movie.poster_path).build(),
+            model = ImageRequest.Builder(context).data(IMAGE_500_URL + movie.poster_path).build(),
             contentDescription = movie.title,
             modifier = Modifier
                 .clip(MaterialTheme.shapes.medium),
@@ -61,7 +61,7 @@ fun MovieCardPreview() {
     ViewReviewTheme {
         MovieCard(
             modifier = Modifier.background(MaterialTheme.colorScheme.background),
-            movie = FightClub,
+            movie = SniperGRIT,
             onClick = {}
         )
     }

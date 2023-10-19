@@ -13,3 +13,5 @@ val ExtraLargePadding = 72.dp
 
 val IndicatorSize = 14.dp
 val IconSize = 20.dp
+
+val BackDropHeight = 300.dp

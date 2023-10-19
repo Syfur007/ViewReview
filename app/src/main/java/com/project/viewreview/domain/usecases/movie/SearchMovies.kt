@@ -9,8 +9,6 @@ class SearchMovies(
     private val movieRepository: MovieRepository,
 ) {
     operator fun invoke(searchQuery: String): Flow<PagingData<MovieResponse>> {
-        return movieRepository.searchMovies(
-            searchQuery = searchQuery
-        )
+        return movieRepository.searchMovies(searchQuery = searchQuery)
     }
 }
