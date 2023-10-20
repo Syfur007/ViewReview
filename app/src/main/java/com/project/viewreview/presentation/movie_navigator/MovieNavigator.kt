@@ -98,9 +98,12 @@ fun MovieNavigator() {
         ) {
             composable(route = Route.HomeScreen.route) {
                 val viewModel: HomeViewModel = hiltViewModel()
-                val movies = viewModel.popularMovies.collectAsLazyPagingItems()
+                val popularMovies = viewModel.popularMovies.collectAsLazyPagingItems()
+                val trendingMovies = viewModel.trendingMovies.collectAsLazyPagingItems()
+                val topRatedMovies = viewModel.topRatedMovies.collectAsLazyPagingItems()
+                val movies = listOf(trendingMovies, topRatedMovies, popularMovies)
                 HomeScreen(
-                    movies = movies,
+                    moviesList = movies,
                     navigateToSearch = {
                         navigateToTab(
                             navController = navController,
@@ -186,14 +189,14 @@ private fun navigateToTab(navController: NavController, route: String) {
 }
 
 private fun navigateToDetails(navController: NavController, movie: MovieResponse) {
-    navController.currentBackStackEntry?.savedStateHandle?.set("article", movie)
+    navController.currentBackStackEntry?.savedStateHandle?.set("movie", movie)
     navController.navigate(
         route = Route.MovieDetailScreen.route
     )
 }
 
 private fun navigateToDetails(navController: NavController, movie: Movie) {
-    navController.currentBackStackEntry?.savedStateHandle?.set("article", movie)
+    navController.currentBackStackEntry?.savedStateHandle?.set("movie", movie)
     navController.navigate(
         route = Route.MovieDetailScreen.route
     )
