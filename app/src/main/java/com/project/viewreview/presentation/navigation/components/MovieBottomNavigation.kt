@@ -1,4 +1,4 @@
-package com.project.viewreview.presentation.movie_navigator.components
+package com.project.viewreview.presentation.navigation.components
 
 import android.content.res.Configuration
 import androidx.annotation.DrawableRes

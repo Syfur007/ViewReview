@@ -1,4 +1,4 @@
-package com.project.viewreview.presentation.navgraph
+package com.project.viewreview.presentation.navigation
 
 import androidx.navigation.NamedNavArgument
 

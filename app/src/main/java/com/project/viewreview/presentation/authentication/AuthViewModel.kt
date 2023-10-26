@@ -1,66 +1,83 @@
 package com.project.viewreview.presentation.authentication
 
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import com.google.firebase.auth.AuthCredential
+import com.project.viewreview.domain.repository.AuthRepository
+import com.project.viewreview.util.DataState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AuthViewModel(
-    private val authClient: GoogleAuthClient
+
+@HiltViewModel
+class AuthViewModel @Inject constructor(
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
-    private val _signInState = MutableStateFlow(SignInState())
-    val signInState = _signInState.asStateFlow()
+    private val _authState = Channel<AuthState>()
+    val authState = _authState.receiveAsFlow()
+
+    private val _googleState = mutableStateOf(GoogleAuthState())
+    val googleState: State<GoogleAuthState> = _googleState
 
 
-    fun onSignInResult(result: SignInResult) {
-        _signInState.update {
-            it.copy(
-                isSignInSuccessful = result.userData != null,
-                signInError = result.errorMessage
-            )
+    fun googleSignIn(credential: AuthCredential) = viewModelScope.launch {
+        authRepository.signInWithGoogle(credential).collect { result ->
+            when (result) {
+                is DataState.Success -> {
+                    _googleState.value = GoogleAuthState(success = result.data)
+                }
+                is DataState.Loading -> {
+                    _googleState.value = GoogleAuthState(loading = true)
+                }
+                is DataState.Error -> {
+                    _googleState.value = GoogleAuthState(error = result.message!!)
+                }
+            }
         }
     }
 
 
-    fun onCreateAccountResult(result: SignInResult) {
-        _signInState.update {
-            it.copy(
-                isSignInSuccessful = result.userData != null,
-                signInError = result.errorMessage
-            )
+    fun signInUserWithEmailAndPassword(email: String, password: String) = viewModelScope.launch {
+        authRepository.signInWithEmailAndPassword(email, password).collect {result ->
+            when (result) {
+                is DataState.Success -> {
+                    _authState.send(AuthState(isSuccessful = result.data?.user?.email))
+                }
+
+                is DataState.Loading -> {
+                    _authState.send(AuthState(isLoading = true))
+                }
+
+                is DataState.Error -> {
+                    _authState.send(AuthState(isError = result.message))
+                }
+            }
         }
     }
 
+    fun signUpUserWithEmailAndPassword(email: String, password: String) = viewModelScope.launch {
+        authRepository.signUpWithEmailAndPassword(email, password).collect { result ->
+            when (result) {
+                is DataState.Success -> {
+                    _authState.send(AuthState(isSuccessful = result.data?.user?.email))
+                }
 
-    fun onSignInWithEmailResult(result: SignInResult) {
-        _signInState.update {
-            it.copy(
-                isSignInSuccessful = result.userData != null,
-                signInError = result.errorMessage
-            )
+                is DataState.Loading -> {
+                    _authState.send(AuthState(isLoading = true))
+                }
+
+                is DataState.Error -> {
+                    _authState.send(AuthState(isError = result.message))
+                }
+            }
         }
     }
 
-    fun onSignInClick(email: String, password: String) {
-        viewModelScope.launch {
-            val result = authClient.signInWithEmail(email, password)
-            onSignInResult(result)
-        }
-    }
-
-    fun onRegisterClick(email: String, password: String) {
-        viewModelScope.launch {
-            val result = authClient.createAccountWithEmail(email, password)
-            onSignInResult(result)
-        }
-    }
-
-
-    fun resetState() {
-        _signInState.update { SignInState() }
-    }
 
 }

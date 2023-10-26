@@ -1,4 +1,4 @@
-package com.project.viewreview.presentation.movie_navigator
+package com.project.viewreview.presentation.navigation
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,9 +27,8 @@ import com.project.viewreview.presentation.details.DetailsScreen
 import com.project.viewreview.presentation.details.DetailsViewModel
 import com.project.viewreview.presentation.home.HomeScreen
 import com.project.viewreview.presentation.home.HomeViewModel
-import com.project.viewreview.presentation.movie_navigator.components.BottomNavigationItem
-import com.project.viewreview.presentation.movie_navigator.components.MovieBottomNavigation
-import com.project.viewreview.presentation.navgraph.Route
+import com.project.viewreview.presentation.navigation.components.BottomNavigationItem
+import com.project.viewreview.presentation.navigation.components.MovieBottomNavigation
 import com.project.viewreview.presentation.search.SearchScreen
 import com.project.viewreview.presentation.search.SearchViewModel
 

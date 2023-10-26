@@ -19,7 +19,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.project.viewreview.presentation.navgraph.NavGraph
+import com.project.viewreview.presentation.navigation.NavGraph
 import com.project.viewreview.presentation.onboarding.OnBoardingScreen
 import com.project.viewreview.presentation.onboarding.OnBoardingViewModel
 import com.project.viewreview.ui.theme.ViewReviewTheme

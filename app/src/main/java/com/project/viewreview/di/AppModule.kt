@@ -2,10 +2,13 @@ package com.project.viewreview.di
 
 import android.app.Application
 import androidx.room.Room
+import com.google.firebase.auth.FirebaseAuth
 import com.project.viewreview.data.local.MovieDao
 import com.project.viewreview.data.local.MovieDatabase
 import com.project.viewreview.data.local.MovieTypeConverter
 import com.project.viewreview.data.remote.MovieApi
+import com.project.viewreview.data.repository.AuthRepositoryImpl
+import com.project.viewreview.domain.repository.AuthRepository
 import com.project.viewreview.util.Constants.API_BASE_URL
 import com.project.viewreview.util.Constants.MOVIE_DATABASE_NAME
 import dagger.Module
@@ -19,6 +22,19 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+    @Provides
+    @Singleton
+    fun provideFirebaseAuthInstance(): FirebaseAuth {
+        return FirebaseAuth.getInstance()
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideAuthRepository(firebaseAuth: FirebaseAuth): AuthRepository {
+        return AuthRepositoryImpl(firebaseAuth)
+    }
 
 
     @Provides
