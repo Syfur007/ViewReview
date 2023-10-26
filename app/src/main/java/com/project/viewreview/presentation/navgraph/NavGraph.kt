@@ -27,6 +27,15 @@ fun NavGraph(
             }
         }
 
+
+        navigation(
+            route = Route.AuthNavigation.route,
+            startDestination = Route.SignInScreen.route
+        ) {
+
+        }
+
+
         navigation(
             route = Route.MovieNavigation.route,
             startDestination = Route.MovieNavigatorScreen.route

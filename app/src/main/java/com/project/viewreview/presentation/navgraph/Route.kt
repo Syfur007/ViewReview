@@ -9,6 +9,12 @@ sealed class Route(
 
     object OnBoardingScreen : Route("onBoardingScreen")
 
+    object SignInScreen : Route("signInScreen")
+
+    object SignUpScreen : Route("signUpScreen")
+
+    object AuthNavigation : Route("authNavigation")
+
     object HomeScreen : Route("homeScreen")
 
     object SearchScreen : Route("searchScreen")

@@ -58,7 +58,7 @@ import com.project.viewreview.ui.theme.ViewReviewTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen() {
+fun SignInScreen() {
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -258,7 +258,7 @@ fun LoginScreen() {
         ) {
             Box(
                 modifier = Modifier
-                    .width(50.dp)
+                    .width(60.dp)
                     .height(2.dp)
                     .background(MaterialTheme.colorScheme.surface)
             )
@@ -344,6 +344,6 @@ fun LoginScreen() {
 @Composable
 fun LoginScreenPreview() {
     ViewReviewTheme {
-        LoginScreen()
+        SignInScreen()
     }
 }
