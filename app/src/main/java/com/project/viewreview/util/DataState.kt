@@ -9,3 +9,13 @@ sealed class DataState<T>(val data: T? = null, val message: String? = null) {
 
     class Loading<T>(data: T? = null) : DataState<T>(data)
 }
+
+sealed class UIComponent {
+
+    data class Toast(val message: String): UIComponent()
+
+    data class Dialog(val title: String, val message: String): UIComponent()
+
+    data class None(val message: String? = null): UIComponent()
+
+}

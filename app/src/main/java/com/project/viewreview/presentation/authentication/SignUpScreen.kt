@@ -14,23 +14,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Icon
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -41,26 +31,20 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.project.viewreview.R
+import com.project.viewreview.presentation.authentication.components.EmailField
+import com.project.viewreview.presentation.authentication.components.PasswordField
 import com.project.viewreview.ui.theme.MediumPadding
 import com.project.viewreview.ui.theme.SemiLargePadding
 import com.project.viewreview.ui.theme.SmallPadding
 import com.project.viewreview.ui.theme.VerySmallPadding
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignUpScreen(
     viewModel: AuthViewModel = hiltViewModel()
@@ -107,7 +91,7 @@ fun SignUpScreen(
                 containerColor = MaterialTheme.colorScheme.surface
             )
 
-            ) {
+        ) {
             Spacer(modifier = Modifier.padding(5.dp))
 
             Column(
@@ -135,144 +119,31 @@ fun SignUpScreen(
 
                 Column(Modifier.fillMaxWidth()) {
 
-                    Text(
-                        text = "Email",
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Medium,
-                        color = MaterialTheme.colorScheme.background
-                    )
-                    Spacer(modifier = Modifier.padding(5.dp))
-
-                    OutlinedTextField(
-                        value = email,
-                        onValueChange = { email = it },
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Outlined.Email,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier.size(24.dp)
-                            )
-                        },
-                        placeholder = { Text(text = "Enter your Email", fontSize = 14.sp) },
-                        singleLine = true,
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = MaterialTheme.shapes.small,
-                        colors = TextFieldDefaults.outlinedTextFieldColors(
-                            focusedBorderColor = Color.Transparent,
-                            unfocusedBorderColor = Color.Transparent,
-                            containerColor = MaterialTheme.colorScheme.primaryContainer,
-                            placeholderColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                            textColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                        ),
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Email,
-                            imeAction = ImeAction.Next
-                        )
-                    )
-                    Spacer(modifier = Modifier.padding(10.dp))
-
-
-                    Text(
-                        text = "Password",
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Medium,
-                        color = MaterialTheme.colorScheme.background
-                    )
-                    Spacer(modifier = Modifier.padding(5.dp))
-
-                    OutlinedTextField(
-                        value = password,
-                        onValueChange = { password = it },
-                        leadingIcon = {
-                            Icon(
-                                painter = painterResource(id = R.drawable.ic_password),
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier.size(24.dp)
-                            )
-                        },
-                        trailingIcon = {
-                            IconButton(onClick = { passwordVisibility = !passwordVisibility }) {
-                                Icon(
-                                    imageVector = if (passwordVisibility) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
-                                    contentDescription = "Toggle Password Visibility",
-                                    tint = MaterialTheme.colorScheme.primary,
-                                )
-                            }
-                        },
-                        placeholder = { Text(text = "Enter your Password", fontSize = 14.sp) },
-                        singleLine = true,
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = MaterialTheme.shapes.small,
-                        colors = TextFieldDefaults.outlinedTextFieldColors(
-                            focusedBorderColor = Color.Transparent,
-                            unfocusedBorderColor = Color.Transparent,
-                            containerColor = MaterialTheme.colorScheme.primaryContainer,
-                            placeholderColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                            textColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                        ),
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Password,
-                            imeAction = ImeAction.Next
-                        ),
-                        visualTransformation = if (passwordVisibility) {
-                            VisualTransformation.None
-                        } else {
-                            PasswordVisualTransformation()
-                        }
+                    EmailField(
+                        email = email,
+                        onEmailChange = { email = it }
                     )
 
                     Spacer(modifier = Modifier.padding(10.dp))
 
-                    Text(
-                        text = "Confirm Password",
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Medium,
-                        color = MaterialTheme.colorScheme.background
+                    PasswordField(
+                        password = password,
+                        passwordVisibility = passwordVisibility,
+                        onPasswordChange = { password = it },
+                        onPasswordVisibilityChange = { passwordVisibility = !passwordVisibility }
                     )
-                    Spacer(modifier = Modifier.padding(5.dp))
 
-                    OutlinedTextField(
-                        value = passwordConfirm,
-                        onValueChange = { passwordConfirm = it },
-                        leadingIcon = {
-                            Icon(
-                                painter = painterResource(id = R.drawable.ic_password),
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier.size(24.dp)
-                            )
+                    Spacer(modifier = Modifier.padding(10.dp))
+
+                    PasswordField(
+                        password = passwordConfirm,
+                        passwordVisibility = passwordConfirmVisibility,
+                        onPasswordChange = { passwordConfirm = it },
+                        onPasswordVisibilityChange = {
+                            passwordConfirmVisibility = !passwordConfirmVisibility
                         },
-                        trailingIcon = {
-                            IconButton(onClick = { passwordConfirmVisibility = !passwordConfirmVisibility }) {
-                                Icon(
-                                    imageVector = if (passwordConfirmVisibility) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
-                                    contentDescription = "Toggle Password Visibility",
-                                    tint = MaterialTheme.colorScheme.primary,
-                                )
-                            }
-                        },
-                        placeholder = { Text(text = "Confirm your Password", fontSize = 14.sp) },
-                        singleLine = true,
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = MaterialTheme.shapes.small,
-                        colors = TextFieldDefaults.outlinedTextFieldColors(
-                            focusedBorderColor = Color.Transparent,
-                            unfocusedBorderColor = Color.Transparent,
-                            containerColor = MaterialTheme.colorScheme.primaryContainer,
-                            placeholderColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                            textColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                        ),
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Password,
-                            imeAction = ImeAction.Done
-                        ),
-                        visualTransformation = if (passwordConfirmVisibility) {
-                            VisualTransformation.None
-                        } else {
-                            PasswordVisualTransformation()
-                        }
+                        title = "Confirm Password",
+                        placeholderText = "Re-enter your Password"
                     )
                 }
 
@@ -337,7 +208,7 @@ fun SignUpScreen(
 
         Spacer(modifier = Modifier.padding(MediumPadding))
 
-        Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
 
             Text(
                 text = "Already have an account?",
@@ -348,7 +219,8 @@ fun SignUpScreen(
 
             Spacer(modifier = Modifier.padding(VerySmallPadding))
 
-            Text(text = "Sign In",
+            Text(
+                text = "Sign In",
                 color = MaterialTheme.colorScheme.surface,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Medium,
