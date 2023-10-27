@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="App.Starting.Theme" parent="Theme.ViewReview">
+    <style name="App.Starting.Theme" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">#1C1E21</item>
-        TODO: Change the icon
-        <item name="windowSplashScreenAnimatedIcon">@drawable/onebyzero_icon</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_viewreview</item>
         <item name="postSplashScreenTheme">@style/Theme.ViewReview</item>
     </style>
 </resources>
