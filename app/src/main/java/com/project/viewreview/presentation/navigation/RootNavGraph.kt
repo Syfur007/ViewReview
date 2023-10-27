@@ -10,7 +10,7 @@ import com.project.viewreview.presentation.onboarding.OnBoardingScreen
 import com.project.viewreview.presentation.onboarding.OnBoardingViewModel
 
 @Composable
-fun NavGraph(
+fun RootNavGraph(
     startDestination: String
 ) {
     val navController = rememberNavController()
@@ -32,7 +32,7 @@ fun NavGraph(
             startDestination = Route.SignInScreen.route
         ) {
             composable(Route.SignInScreen.route) {
-                AuthNavigator()
+                AuthNavigator(rootNavController = navController)
             }
 
         }

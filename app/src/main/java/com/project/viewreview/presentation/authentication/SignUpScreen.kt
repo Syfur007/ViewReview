@@ -2,6 +2,7 @@ package com.project.viewreview.presentation.authentication
 
 import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,11 +15,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -47,7 +54,9 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun SignUpScreen(
-    viewModel: AuthViewModel = hiltViewModel()
+    viewModel: AuthViewModel = hiltViewModel(),
+    navigateToSignIn: () -> Unit,
+    exitAuthentication: () -> Unit,
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -60,6 +69,17 @@ fun SignUpScreen(
     val context = LocalContext.current
     val state = viewModel.authState.collectAsState(initial = null)
 
+    if (state.value?.isLoading == true) {
+        Dialog(onDismissRequest = {}) {
+            Box(
+                modifier = Modifier.size(200.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        }
+    }
+
     Column(
         Modifier
             .fillMaxSize()
@@ -68,23 +88,34 @@ fun SignUpScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        if (state.value?.isLoading == true) {
-            Dialog(onDismissRequest = {}) {
-                Box(
-                    modifier = Modifier.size(200.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
-                }
+        Row(Modifier.fillMaxWidth().padding(horizontal = MediumPadding, vertical = SmallPadding), horizontalArrangement = Arrangement.SpaceBetween) {
+            IconButton(onClick = { navigateToSignIn() }) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "Exit Button",
+                    tint = MaterialTheme.colorScheme.background,
+                    modifier = Modifier.background(
+                        MaterialTheme.colorScheme.surface,
+                        CircleShape
+                    )
+                )
+            }
+            IconButton(onClick = { exitAuthentication() }) {
+                Icon(
+                    imageVector = Icons.Default.Close,
+                    contentDescription = "Exit Button",
+                    tint = MaterialTheme.colorScheme.background,
+                    modifier = Modifier.background(
+                        MaterialTheme.colorScheme.surface,
+                        CircleShape
+                    )
+                )
             }
         }
 
-
-        Spacer(modifier = Modifier.padding(SmallPadding))
-
         Card(
             modifier = Modifier
-                .padding(MediumPadding)
+                .padding(horizontal = MediumPadding)
                 .fillMaxWidth(),
             shape = MaterialTheme.shapes.large,
             colors = CardDefaults.cardColors(
@@ -224,6 +255,9 @@ fun SignUpScreen(
                 color = MaterialTheme.colorScheme.surface,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Medium,
+                modifier = Modifier.clickable {
+                    navigateToSignIn()
+                }
             )
 
         }

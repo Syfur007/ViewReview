@@ -18,8 +18,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -112,11 +114,23 @@ fun SignInScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Spacer(modifier = Modifier.padding(SmallPadding))
+        Row(Modifier.fillMaxWidth().padding(horizontal = MediumPadding, vertical = SmallPadding), horizontalArrangement = Arrangement.End) {
+            IconButton(onClick = { exitAuthentication() }) {
+                Icon(
+                    imageVector = Icons.Default.Close,
+                    contentDescription = "Exit Button",
+                    tint = MaterialTheme.colorScheme.background,
+                    modifier = Modifier.background(
+                        MaterialTheme.colorScheme.surface,
+                        CircleShape
+                    )
+                )
+            }
+        }
 
         Card(
             modifier = Modifier
-                .padding(MediumPadding)
+                .padding(horizontal = MediumPadding)
                 .fillMaxWidth(),
             shape = MaterialTheme.shapes.large,
 

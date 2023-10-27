@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.project.viewreview.domain.usecases.app_entry.ReadAppEntry
-import com.project.viewreview.presentation.navgraph.Route
+import com.project.viewreview.presentation.navigation.Route
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
@@ -26,7 +26,7 @@ class MainViewModel @Inject constructor(
     init {
         readAppEntry().onEach { shouldStartFromHomeScreen ->
             if(shouldStartFromHomeScreen){
-                _startDestination.value = Route.MovieNavigation.route
+                _startDestination.value = Route.AuthNavigation.route
             } else{
                 _startDestination.value = Route.AppStartNavigation.route
             }

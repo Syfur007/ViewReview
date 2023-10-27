@@ -2,18 +2,19 @@ package com.project.viewreview.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.project.viewreview.presentation.authentication.SignInScreen
 import com.project.viewreview.presentation.authentication.SignUpScreen
 
 @Composable
-fun AuthNavigator() {
+fun AuthNavigator(
+    rootNavController: NavHostController
+) {
 
     val navController = rememberNavController()
-    val backStackState = navController.currentBackStackEntryAsState().value
 
     NavHost(
         navController = navController,
@@ -22,7 +23,12 @@ fun AuthNavigator() {
 
         composable(Route.SignInScreen.route) {
             SignInScreen(
-                exitAuthentication = { /*TODO*/ },
+                exitAuthentication = {
+                    navigateToScreen(
+                        navController = rootNavController,
+                        route = Route.MovieNavigatorScreen.route
+                    )
+                },
                 navigateToSignUp = {
                     navigateToScreen(
                         navController = navController,
@@ -33,7 +39,20 @@ fun AuthNavigator() {
         }
 
         composable(Route.SignUpScreen.route) {
-            SignUpScreen()
+            SignUpScreen(
+                navigateToSignIn = {
+                    navigateToScreen(
+                        navController = navController,
+                        route = Route.SignInScreen.route
+                    )
+                },
+                exitAuthentication = {
+                    navigateToScreen(
+                        navController = rootNavController,
+                        route = Route.MovieNavigatorScreen.route
+                    )
+                },
+            )
         }
     }
 }
