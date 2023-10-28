@@ -43,7 +43,7 @@ fun RootNavGraph(
             startDestination = Route.MovieNavigatorScreen.route
         ) {
             composable(Route.MovieNavigatorScreen.route) {
-                MovieNavigator()
+                MovieNavigator(rootNavController = navController)
             }
         }
     }

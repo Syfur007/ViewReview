@@ -77,7 +77,9 @@ fun NewsBottomNavigationPreview() {
         MovieBottomNavigation(items = listOf(
             BottomNavigationItem(icon = R.drawable.ic_home, text = "Home"),
             BottomNavigationItem(icon = R.drawable.ic_search, text = "Search"),
-            BottomNavigationItem(icon = R.drawable.ic_bookmark, text = "Bookmark"),
+            BottomNavigationItem(icon = R.drawable.ic_bookmark, text = "Bookmarks"),
+            BottomNavigationItem(icon = R.drawable.ic_menu, text = "Menu")
+
         ), selectedItem = 0, onItemClick = {})
     }
 }

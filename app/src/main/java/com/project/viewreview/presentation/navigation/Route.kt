@@ -23,6 +23,7 @@ sealed class Route(
     object HomeScreen : Route("homeScreen")
     object SearchScreen : Route("searchScreen")
     object BookmarkScreen : Route("bookmarkScreen")
+    object MenuScreen : Route("menuScreen")
     object MovieDetailScreen : Route("movieDetailScreen")
     object MovieNavigatorScreen: Route("movieNavigator")
 }

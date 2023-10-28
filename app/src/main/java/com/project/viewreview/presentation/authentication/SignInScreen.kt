@@ -68,7 +68,7 @@ import kotlinx.coroutines.launch
 fun SignInScreen(
     viewModel: AuthViewModel = hiltViewModel(),
     exitAuthentication: () -> Unit,
-    navigateToSignUp: () -> Unit
+    navigateToSignUp: () -> Unit,
 ) {
 
     var email by remember { mutableStateOf("") }
@@ -340,6 +340,7 @@ fun SignInScreen(
                 if (state.value?.isSuccessful?.isNotEmpty() == true) {
                     val success = state.value?.isSuccessful
                     Toast.makeText(context, "$success", Toast.LENGTH_LONG).show()
+                    exitAuthentication()
                 }
             }
         }
@@ -357,6 +358,7 @@ fun SignInScreen(
             scope.launch {
                 if (googleSignInState.success != null) {
                     Toast.makeText(context, "Sign In Success", Toast.LENGTH_LONG).show()
+                    exitAuthentication()
                 }
             }
         }
