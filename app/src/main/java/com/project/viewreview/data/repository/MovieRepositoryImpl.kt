@@ -8,6 +8,7 @@ import com.project.viewreview.data.remote.MovieApi
 import com.project.viewreview.data.remote.MoviePagingSource
 import com.project.viewreview.data.remote.SearchPagingSource
 import com.project.viewreview.data.remote.dto.Movie
+import com.project.viewreview.data.remote.dto.MovieCredits
 import com.project.viewreview.domain.model.MovieResponse
 import com.project.viewreview.domain.repository.MovieRepository
 import kotlinx.coroutines.flow.Flow
@@ -57,6 +58,11 @@ class MovieRepositoryImpl @Inject constructor(
     override suspend fun getMovie(movieId: Int): Movie {
         return movieApi.getMovie(movieId)
     }
+
+    override suspend fun getMovieCredits(movieId: Int): MovieCredits {
+        return movieApi.getMovieCredits(movieId)
+    }
+
 
     override suspend fun upsertMovie(movie: Movie) {
         movieDao.upsert(movie)

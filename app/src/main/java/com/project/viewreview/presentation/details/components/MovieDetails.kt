@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -43,7 +44,9 @@ import com.gowtham.ratingbar.RatingBarStyle
 import com.gowtham.ratingbar.StepSize
 import com.project.viewreview.R
 import com.project.viewreview.data.remote.dto.FightClub
+import com.project.viewreview.data.remote.dto.FightClubCredits
 import com.project.viewreview.data.remote.dto.Movie
+import com.project.viewreview.data.remote.dto.MovieCredits
 import com.project.viewreview.ui.theme.BackDropHeight
 import com.project.viewreview.ui.theme.MediumPadding
 import com.project.viewreview.ui.theme.VerySmallPadding
@@ -53,7 +56,11 @@ import kotlin.math.max
 import kotlin.math.min
 
 @Composable
-fun MovieDetails(movie: Movie, scrollState: LazyListState) {
+fun MovieDetails(
+    movie: Movie,
+    movieCredits: MovieCredits,
+    scrollState: LazyListState
+) {
 
     val maxOffset =
         with(LocalDensity.current) { BackDropHeight.roundToPx() } - LocalWindowInsets.current.systemBars.layoutInsets.top
@@ -206,10 +213,28 @@ fun MovieDetails(movie: Movie, scrollState: LazyListState) {
                 }
 
                 Text(
-                    text = "Release date: ${movie.release_date}",
-                    color = MaterialTheme.colorScheme.onBackground,
-                    modifier = Modifier.padding(vertical = VerySmallPadding),
-                    fontSize = 18.sp
+                    buildAnnotatedString {
+                        withStyle(
+                            style = SpanStyle(
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Normal,
+                                color = MaterialTheme.colorScheme.onBackground,
+                            )
+                        ) {
+                            append("Release date: ")
+                        }
+
+                        withStyle(
+                            style = SpanStyle(
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Medium,
+                                color = MaterialTheme.colorScheme.onBackground,
+                            )
+                        ) {
+                            append(movie.release_date)
+                        }
+                    },
+                    modifier = Modifier.padding(vertical = VerySmallPadding)
                 )
 
 
@@ -218,6 +243,33 @@ fun MovieDetails(movie: Movie, scrollState: LazyListState) {
                     color = MaterialTheme.colorScheme.onBackground,
                     modifier = Modifier.padding(top = VerySmallPadding),
                 )
+
+                Spacer(modifier = Modifier.padding(top = MediumPadding))
+
+                Text(
+                    text = "Cast",
+                    fontSize = 20.sp,
+                    color = MaterialTheme.colorScheme.onBackground,
+                    modifier = Modifier.padding(top = VerySmallPadding),
+                )
+
+                LazyRow {
+                    items(5) {
+                        val cast = movieCredits.cast[it]
+                        CastCard(cast = cast)
+                    }
+                }
+
+                Spacer(modifier = Modifier.padding(top = MediumPadding))
+
+                Text(
+                    text = "Reviews",
+                    fontSize = 20.sp,
+                    color = MaterialTheme.colorScheme.onBackground,
+                    modifier = Modifier.padding(top = VerySmallPadding),
+                )
+
+                Spacer(modifier = Modifier.padding(top = MediumPadding))
 
 
             }
@@ -233,6 +285,6 @@ fun MovieDetails(movie: Movie, scrollState: LazyListState) {
 @Composable
 fun Test() {
     ViewReviewTheme {
-        MovieDetails(movie = FightClub, scrollState = rememberLazyListState())
+        MovieDetails(movie = FightClub, movieCredits = FightClubCredits, scrollState = rememberLazyListState())
     }
 }

@@ -1,4 +1,4 @@
-package com.project.viewreview.domain.usecases.movie
+package com.project.viewreview.domain.usecases.movie_list
 
 import com.project.viewreview.data.local.MovieDao
 import com.project.viewreview.data.remote.dto.Movie

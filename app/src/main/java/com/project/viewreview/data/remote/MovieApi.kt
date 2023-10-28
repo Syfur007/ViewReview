@@ -1,7 +1,8 @@
 package com.project.viewreview.data.remote
 
-import com.project.viewreview.data.remote.dto.MovieListResponse
 import com.project.viewreview.data.remote.dto.Movie
+import com.project.viewreview.data.remote.dto.MovieCredits
+import com.project.viewreview.data.remote.dto.MovieListResponse
 import com.project.viewreview.util.Constants.API_KEY
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -39,4 +40,10 @@ interface MovieApi {
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String = API_KEY
     ): Movie
+
+    @GET("movie/{movie_id}/credits")
+    suspend fun getMovieCredits(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String = API_KEY
+    ): MovieCredits
 }

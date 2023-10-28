@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.project.viewreview.domain.usecases.movie.SearchMovies
+import com.project.viewreview.domain.usecases.movie_list.SearchMovies
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

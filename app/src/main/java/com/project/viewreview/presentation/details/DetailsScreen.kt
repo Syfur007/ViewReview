@@ -14,7 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.project.viewreview.data.remote.dto.FightClub
+import com.project.viewreview.data.remote.dto.FightClubCredits
 import com.project.viewreview.data.remote.dto.Movie
+import com.project.viewreview.data.remote.dto.MovieCredits
 import com.project.viewreview.presentation.details.components.DetailsTopBar
 import com.project.viewreview.presentation.details.components.MovieDetails
 import com.project.viewreview.ui.theme.ViewReviewTheme
@@ -24,6 +26,7 @@ import com.project.viewreview.util.UIComponent
 @Composable
 fun DetailsScreen(
     movie: Movie,
+    movieCredits: MovieCredits,
     onEvent: (DetailsEvent) -> Unit,
     sideEffect: UIComponent?,
     navigateUp: () -> Unit,
@@ -50,7 +53,7 @@ fun DetailsScreen(
     ) {
 
         val scrollState = rememberLazyListState()
-        MovieDetails(movie = movie, scrollState = scrollState)
+        MovieDetails(movie = movie, movieCredits = movieCredits, scrollState = scrollState)
 
         DetailsTopBar(
             onBookmarkClick = { onEvent(DetailsEvent.UpsertDeleteMovie(movie)) },
@@ -72,6 +75,6 @@ fun DetailsScreen(
 @Composable
 fun Test() {
     ViewReviewTheme {
-        DetailsScreen(movie = FightClub, onEvent = {}, navigateUp = {}, sideEffect = null)
+        DetailsScreen(movie = FightClub, movieCredits = FightClubCredits, onEvent = {}, navigateUp = {}, sideEffect = null)
     }
 }

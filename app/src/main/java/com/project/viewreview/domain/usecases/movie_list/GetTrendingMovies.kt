@@ -1,4 +1,4 @@
-package com.project.viewreview.domain.usecases.movie
+package com.project.viewreview.domain.usecases.movie_list
 
 import androidx.paging.PagingData
 import com.project.viewreview.domain.model.MovieResponse

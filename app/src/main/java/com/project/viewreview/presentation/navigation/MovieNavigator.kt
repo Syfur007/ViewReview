@@ -140,20 +140,25 @@ fun MovieNavigator(
                 val viewModel: DetailsViewModel = hiltViewModel()
                 val scope = rememberCoroutineScope()
                 val selectedMovie by viewModel.selectedMovie
+                val movieCredits by viewModel.movieCredits
 
 
                 navController.previousBackStackEntry?.savedStateHandle?.get<Int?>("movieId")
                     ?.let { movieId ->
                         scope.launch {
                             viewModel.selectMovie(movieId)
+                            viewModel.getMovieCredits(movieId)
                         }
                         selectedMovie?.let { movie ->
-                            DetailsScreen(
-                                movie = movie,
-                                onEvent = viewModel::onEvent,
-                                navigateUp = { navController.navigateUp() },
-                                sideEffect = viewModel.sideEffect
-                            )
+                            movieCredits?.let { credits ->
+                                DetailsScreen(
+                                    movie = movie,
+                                    movieCredits = credits,
+                                    onEvent = viewModel::onEvent,
+                                    navigateUp = { navController.navigateUp() },
+                                    sideEffect = viewModel.sideEffect
+                                )
+                            }
                         }
                     }
             }

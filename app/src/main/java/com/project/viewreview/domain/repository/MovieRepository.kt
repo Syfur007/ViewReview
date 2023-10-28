@@ -2,6 +2,7 @@ package com.project.viewreview.domain.repository
 
 import androidx.paging.PagingData
 import com.project.viewreview.data.remote.dto.Movie
+import com.project.viewreview.data.remote.dto.MovieCredits
 import com.project.viewreview.domain.model.MovieResponse
 import kotlinx.coroutines.flow.Flow
 
@@ -22,4 +23,6 @@ interface MovieRepository {
     fun getMovies(): Flow<List<Movie>>
 
     suspend fun getMovie(movieId: Int): Movie
+
+    suspend fun getMovieCredits(movieId: Int): MovieCredits
 }

@@ -1,4 +1,4 @@
-package com.project.viewreview.domain.usecases.movie
+package com.project.viewreview.domain.usecases.movie_list
 
 import com.project.viewreview.domain.repository.MovieRepository
 import javax.inject.Inject
