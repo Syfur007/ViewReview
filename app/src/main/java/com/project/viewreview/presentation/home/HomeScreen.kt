@@ -8,6 +8,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,6 +22,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
@@ -30,7 +32,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -40,6 +42,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.project.viewreview.domain.model.MovieResponse
 import com.project.viewreview.presentation.common.MoviesList
 import com.project.viewreview.ui.theme.MediumPadding
+import com.project.viewreview.ui.theme.SmallPadding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -65,7 +68,7 @@ fun HomeScreen(
                 .padding(horizontal = MediumPadding),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = "ViewReview", fontSize = 25.sp, color = Color.White)
+            Text(text = "ViewReview", fontSize = 25.sp, color = MaterialTheme.colorScheme.onBackground)
 
             Icon(
                 imageVector = Icons.Default.Search,
@@ -75,17 +78,15 @@ fun HomeScreen(
                     .clickable {
                         navigateToSearch()
                     },
-                tint = Color.White,
+                tint = MaterialTheme.colorScheme.onBackground,
             )
 
         }
 
 
-        Spacer(modifier = Modifier.height(MediumPadding))
+        Spacer(modifier = Modifier.height(SmallPadding))
 
         val scrollState = rememberScrollState(initial = state.scrollValue)
-
-        Spacer(modifier = Modifier.height(MediumPadding))
 
 
         // Update the maxScrollingValue
@@ -133,12 +134,15 @@ fun HomeScreen(
                     modifier = Modifier
                         .tabIndicatorOffset(tabPositions[pagerState.currentPage])
                         .padding(horizontal = 10.dp),
+                    height = 2.dp,
+                    color = MaterialTheme.colorScheme.primary
                 )
             },
+            containerColor = MaterialTheme.colorScheme.background
         ) {
             tabTitles.forEachIndexed { index, title ->
                 Tab(
-                    text = { Text(text = title) },
+                    text = { Text(text = title, fontWeight = FontWeight.Bold) },
                     selected = pagerState.currentPage == index,
                     onClick = { 
                         coroutineScope.launch {
@@ -149,7 +153,9 @@ fun HomeScreen(
             }
         }
 
-        HorizontalPager(state = pagerState) { index ->
+        Spacer(modifier = Modifier.height(MediumPadding))
+
+        HorizontalPager(state = pagerState, contentPadding = PaddingValues()) { index ->
             when (index) {
                 0 -> {
                     MoviesList(

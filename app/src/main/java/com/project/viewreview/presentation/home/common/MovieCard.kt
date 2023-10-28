@@ -75,7 +75,7 @@ fun MovieCard(
 
         )
         Spacer(modifier = Modifier.height(VerySmallPadding))
-        Text(text = movie.title)
+        Text(text = movie.title, color = MaterialTheme.colorScheme.onBackground)
     }
 
 }
