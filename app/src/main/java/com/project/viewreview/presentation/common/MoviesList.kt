@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.project.viewreview.data.remote.dto.Movie
-import com.project.viewreview.domain.model.MovieBasic
+import com.project.viewreview.domain.model.MovieResponse
 import com.project.viewreview.presentation.home.common.MovieCard
 import com.project.viewreview.ui.theme.MediumPadding
 
@@ -40,7 +40,7 @@ fun MoviesList(
 @Composable
 fun MoviesList(
     modifier: Modifier = Modifier,
-    movies: LazyPagingItems<MovieBasic>,
+    movies: LazyPagingItems<MovieResponse>,
     onClick: (Int) -> Unit
 ) {
     val handlePagingResult = handlePagingResult(movies = movies)
@@ -63,7 +63,7 @@ fun MoviesList(
 
 @Composable
 fun handlePagingResult(
-    movies: LazyPagingItems<MovieBasic>,
+    movies: LazyPagingItems<MovieResponse>,
 ): Boolean {
     val loadState = movies.loadState
     val error = when {

@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.project.viewreview.data.remote.dto.Movie
-import com.project.viewreview.domain.model.MovieBasic
+import com.project.viewreview.domain.model.MovieResponse
 import com.project.viewreview.domain.model.SniperGRIT
 import com.project.viewreview.ui.theme.VerySmallPadding
 import com.project.viewreview.ui.theme.ViewReviewTheme
@@ -56,7 +56,7 @@ fun MovieCard(
 @Composable
 fun MovieCard(
     modifier: Modifier = Modifier,
-    movie: MovieBasic,
+    movie: MovieResponse,
     onClick: () -> Unit
 ) {
     val context = LocalContext.current

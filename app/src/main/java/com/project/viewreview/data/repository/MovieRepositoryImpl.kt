@@ -8,7 +8,7 @@ import com.project.viewreview.data.remote.MovieApi
 import com.project.viewreview.data.remote.MoviePagingSource
 import com.project.viewreview.data.remote.SearchPagingSource
 import com.project.viewreview.data.remote.dto.Movie
-import com.project.viewreview.domain.model.MovieBasic
+import com.project.viewreview.domain.model.MovieResponse
 import com.project.viewreview.domain.repository.MovieRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -18,7 +18,7 @@ class MovieRepositoryImpl @Inject constructor(
     private val movieDao: MovieDao
 ) : MovieRepository {
 
-    override fun getTopRatedMovies(): Flow<PagingData<MovieBasic>> {
+    override fun getTopRatedMovies(): Flow<PagingData<MovieResponse>> {
         return Pager(
             config = PagingConfig(pageSize = 10),
             pagingSourceFactory = {
@@ -27,7 +27,7 @@ class MovieRepositoryImpl @Inject constructor(
         ).flow
     }
 
-    override fun getTrendingMovies(): Flow<PagingData<MovieBasic>> {
+    override fun getTrendingMovies(): Flow<PagingData<MovieResponse>> {
         return Pager(
             config = PagingConfig(pageSize = 10),
             pagingSourceFactory = {
@@ -36,7 +36,7 @@ class MovieRepositoryImpl @Inject constructor(
         ).flow
     }
 
-    override fun getPopularMovies(): Flow<PagingData<MovieBasic>> {
+    override fun getPopularMovies(): Flow<PagingData<MovieResponse>> {
         return Pager(
             config = PagingConfig(pageSize = 10),
             pagingSourceFactory = {
@@ -45,7 +45,7 @@ class MovieRepositoryImpl @Inject constructor(
         ).flow
     }
 
-    override fun searchMovies(searchQuery: String): Flow<PagingData<MovieBasic>> {
+    override fun searchMovies(searchQuery: String): Flow<PagingData<MovieResponse>> {
         return Pager(
             config = PagingConfig(pageSize = 10),
             pagingSourceFactory = {

@@ -2,16 +2,16 @@ package com.project.viewreview.data.remote
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.project.viewreview.domain.model.MovieBasic
+import com.project.viewreview.domain.model.MovieResponse
 import com.project.viewreview.util.Constants.API_KEY
 
 class MoviePagingSource(
     private val movieApi: MovieApi,
     private val movieListType: String
-):PagingSource<Int, MovieBasic>() {
+):PagingSource<Int, MovieResponse>() {
 
 
-    override fun getRefreshKey(state: PagingState<Int, MovieBasic>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, MovieResponse>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
@@ -20,7 +20,7 @@ class MoviePagingSource(
 
     private var totalMovieCount = 0
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieBasic> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieResponse> {
         val page = params.key ?: 1
         return try {
             val moviesResponse = when(movieListType) {

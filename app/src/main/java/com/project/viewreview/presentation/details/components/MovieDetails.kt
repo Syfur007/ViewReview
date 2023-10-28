@@ -119,7 +119,7 @@ fun MovieDetails(movie: Movie, scrollState: LazyListState) {
                             style = SpanStyle(
                                 fontSize = 25.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.surface,
+                                color = MaterialTheme.colorScheme.onBackground,
                             )
                         ) {
                             append(movie.title)
@@ -129,7 +129,7 @@ fun MovieDetails(movie: Movie, scrollState: LazyListState) {
                             style = SpanStyle(
                                 fontSize = 25.sp,
                                 fontWeight = FontWeight.Normal,
-                                color = MaterialTheme.colorScheme.secondary,
+                                color = MaterialTheme.colorScheme.onPrimaryContainer,
                             )
                         ) {
                             append(" (" + movie.release_date.subSequence(0, 4) + ")")
@@ -140,7 +140,7 @@ fun MovieDetails(movie: Movie, scrollState: LazyListState) {
                 if (movie.tagline.isNotBlank()) {
                     Text(
                         text = "\"" + movie.tagline + "\"",
-                        color = MaterialTheme.colorScheme.secondary,
+                        color = MaterialTheme.colorScheme.onBackground,
                         modifier = Modifier.padding(top = VerySmallPadding)
                     )
                 }
@@ -160,13 +160,13 @@ fun MovieDetails(movie: Movie, scrollState: LazyListState) {
                     )
                     Text(
                         text = movie.vote_average.toString(),
-                        color = MaterialTheme.colorScheme.surface,
+                        color = MaterialTheme.colorScheme.onBackground,
                         modifier = Modifier.padding(start = 10.dp),
                     )
 
                     Text(
                         text = "(${movie.vote_count} ratings)",
-                        color = MaterialTheme.colorScheme.surface,
+                        color = MaterialTheme.colorScheme.onBackground,
                         modifier = Modifier.padding(start = 5.dp),
                     )
                 }
@@ -186,14 +186,14 @@ fun MovieDetails(movie: Movie, scrollState: LazyListState) {
                     modifier = Modifier.padding(vertical = VerySmallPadding)
                 ) {
 
-                    Text(text = genres, color = MaterialTheme.colorScheme.secondary)
+                    Text(text = genres, color = MaterialTheme.colorScheme.onBackground)
 
                     Spacer(modifier = Modifier.padding(start = MediumPadding))
 
                     Icon(
                         painter = painterResource(id = R.drawable.ic_duration),
                         contentDescription = null,
-                        tint = MaterialTheme.colorScheme.secondary,
+                        tint = MaterialTheme.colorScheme.onBackground,
                         modifier = Modifier
                             .padding(vertical = VerySmallPadding)
                             .height(16.dp)
@@ -201,13 +201,13 @@ fun MovieDetails(movie: Movie, scrollState: LazyListState) {
 
                     Spacer(modifier = Modifier.padding(start = VerySmallPadding))
 
-                    Text(text = "${movie.runtime} min", color = MaterialTheme.colorScheme.secondary)
+                    Text(text = "${movie.runtime} min", color = MaterialTheme.colorScheme.onBackground)
 
                 }
 
                 Text(
                     text = "Release date: ${movie.release_date}",
-                    color = MaterialTheme.colorScheme.surface,
+                    color = MaterialTheme.colorScheme.onBackground,
                     modifier = Modifier.padding(vertical = VerySmallPadding),
                     fontSize = 18.sp
                 )
@@ -215,7 +215,7 @@ fun MovieDetails(movie: Movie, scrollState: LazyListState) {
 
                 Text(
                     text = movie.overview,
-                    color = MaterialTheme.colorScheme.surface,
+                    color = MaterialTheme.colorScheme.onBackground,
                     modifier = Modifier.padding(top = VerySmallPadding),
                 )
 

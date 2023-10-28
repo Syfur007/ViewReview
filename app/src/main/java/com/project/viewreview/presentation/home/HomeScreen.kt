@@ -37,7 +37,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.project.viewreview.domain.model.MovieBasic
+import com.project.viewreview.domain.model.MovieResponse
 import com.project.viewreview.presentation.common.MoviesList
 import com.project.viewreview.ui.theme.MediumPadding
 import kotlinx.coroutines.delay
@@ -46,7 +46,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
-    moviesList: List<LazyPagingItems<MovieBasic>>,
+    moviesList: List<LazyPagingItems<MovieResponse>>,
     state: HomeState,
     event: (HomeEvent) -> Unit,
     navigateToSearch: () -> Unit,
