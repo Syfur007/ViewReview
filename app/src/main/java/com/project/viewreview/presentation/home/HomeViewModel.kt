@@ -12,9 +12,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getTrendingMoviesUseCase: GetTrendingMovies,
-    private val getPopularMoviesUseCase: GetPopularMovies,
-    private val getTopRatedMoviesUseCase: GetTopRatedMovies,
+    getTrendingMoviesUseCase: GetTrendingMovies,
+    getPopularMoviesUseCase: GetPopularMovies,
+    getTopRatedMoviesUseCase: GetTopRatedMovies,
 ) : ViewModel() {
 
     var state = mutableStateOf(HomeState())
