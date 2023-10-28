@@ -1,9 +1,10 @@
 package com.project.viewreview.data.remote
 
 import com.project.viewreview.data.remote.dto.MovieListResponse
-import com.project.viewreview.domain.model.Movie
+import com.project.viewreview.data.remote.dto.Movie
 import com.project.viewreview.util.Constants.API_KEY
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MovieApi {
@@ -35,7 +36,7 @@ interface MovieApi {
 
     @GET("movie/{movie_id}")
     suspend fun getMovie(
-        @Query("movie_id") movieId: Int,
+        @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String = API_KEY
     ): Movie
 }

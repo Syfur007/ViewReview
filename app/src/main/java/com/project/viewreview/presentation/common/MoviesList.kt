@@ -10,16 +10,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import com.project.viewreview.domain.model.Movie
-import com.project.viewreview.domain.model.MovieResponse
+import com.project.viewreview.data.remote.dto.Movie
+import com.project.viewreview.domain.model.MovieBasic
 import com.project.viewreview.presentation.home.common.MovieCard
 import com.project.viewreview.ui.theme.MediumPadding
 
+
+// For Bookmark List
 @Composable
 fun MoviesList(
     modifier: Modifier = Modifier,
     movies: List<Movie>,
-    onClick: (Movie) -> Unit
+    onClick: (Int) -> Unit
 ) {
     LazyVerticalGrid(
         modifier = modifier,
@@ -29,16 +31,17 @@ fun MoviesList(
     ) {
         items(movies.size) {
             val movie = movies[it]
-            MovieCard(movie = movie, onClick = { onClick(movie) })
+            MovieCard(movie = movie, onClick = { onClick(movie.id) })
         }
     }
 }
 
+// For Home and Search List
 @Composable
 fun MoviesList(
     modifier: Modifier = Modifier,
-    movies: LazyPagingItems<MovieResponse>,
-    onClick: (MovieResponse) -> Unit
+    movies: LazyPagingItems<MovieBasic>,
+    onClick: (Int) -> Unit
 ) {
     val handlePagingResult = handlePagingResult(movies = movies)
     if (handlePagingResult) {
@@ -50,7 +53,7 @@ fun MoviesList(
         ) {
             items(movies.itemCount) {
                 movies[it]?.let {movie ->
-                    MovieCard(movie = movie, onClick = { onClick(movie) })
+                    MovieCard(movie = movie, onClick = { onClick(movie.id) })
                 }
             }
         }
@@ -60,7 +63,7 @@ fun MoviesList(
 
 @Composable
 fun handlePagingResult(
-    movies: LazyPagingItems<MovieResponse>,
+    movies: LazyPagingItems<MovieBasic>,
 ): Boolean {
     val loadState = movies.loadState
     val error = when {

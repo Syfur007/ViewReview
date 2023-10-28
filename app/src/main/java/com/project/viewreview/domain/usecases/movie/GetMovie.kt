@@ -1,6 +1,6 @@
 package com.project.viewreview.domain.usecases.movie
 
-import com.project.viewreview.domain.model.Movie
+import com.project.viewreview.data.remote.dto.Movie
 import com.project.viewreview.domain.repository.MovieRepository
 import javax.inject.Inject
 

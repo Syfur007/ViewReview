@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.project.viewreview.domain.model.Movie
+import com.project.viewreview.data.remote.dto.Movie
 import kotlinx.coroutines.flow.Flow
 
 @Dao

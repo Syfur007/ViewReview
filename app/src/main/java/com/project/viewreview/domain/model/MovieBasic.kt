@@ -1,6 +1,6 @@
 package com.project.viewreview.domain.model
 
-data class MovieResponse(
+data class MovieBasic(
     val adult: Boolean,
     val backdrop_path: String,
     val genre_ids: List<Int>?,
@@ -17,7 +17,7 @@ data class MovieResponse(
     val vote_count: Int
 )
 
-val SniperGRIT = MovieResponse(
+val SniperGRIT = MovieBasic(
     adult = false,
     backdrop_path = "/1DBo2V4KyBWXuagt4JOR2jZJMHB.jpg",
     genre_ids = listOf(28, 53),

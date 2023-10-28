@@ -5,8 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.project.viewreview.domain.model.Movie
+import com.project.viewreview.data.remote.dto.Movie
 import com.project.viewreview.domain.usecases.movie.DeleteMovie
+import com.project.viewreview.domain.usecases.movie.GetMovie
 import com.project.viewreview.domain.usecases.movie.GetSavedMovie
 import com.project.viewreview.domain.usecases.movie.UpsertMovie
 import com.project.viewreview.util.UIComponent
@@ -17,10 +18,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
+    private val getMovieUseCase: GetMovie,
     private val getSavedMovieUseCase: GetSavedMovie,
     private val deleteMovieUseCase: DeleteMovie,
     private val upsertMovieUseCase: UpsertMovie
 ): ViewModel() {
+
+    var selectedMovie = mutableStateOf<Movie?>(null)
+        private set
+
+    suspend fun selectMovie(movieId: Int) {
+        selectedMovie.value = getMovieUseCase(movieId)
+    }
 
     var sideEffect by mutableStateOf<UIComponent?>(null)
         private set

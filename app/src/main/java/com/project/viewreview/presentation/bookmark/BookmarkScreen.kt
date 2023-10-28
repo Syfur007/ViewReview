@@ -10,14 +10,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import com.project.viewreview.domain.model.Movie
 import com.project.viewreview.presentation.common.MoviesList
 import com.project.viewreview.ui.theme.MediumPadding
 
 @Composable
 fun BookmarkScreen(
     state: BookmarkState,
-    navigateToDetails: (Movie) -> Unit,
+    navigateToDetails: (Int) -> Unit,
 ) {
     Column(
         Modifier

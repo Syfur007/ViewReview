@@ -13,8 +13,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import com.project.viewreview.domain.model.FightClub
-import com.project.viewreview.domain.model.Movie
+import com.project.viewreview.data.remote.dto.FightClub
+import com.project.viewreview.data.remote.dto.Movie
 import com.project.viewreview.presentation.details.components.DetailsTopBar
 import com.project.viewreview.presentation.details.components.MovieDetails
 import com.project.viewreview.ui.theme.ViewReviewTheme

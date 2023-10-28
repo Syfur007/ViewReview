@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
+import com.project.viewreview.domain.usecases.movie.GetMovie
 import com.project.viewreview.domain.usecases.movie.GetPopularMovies
 import com.project.viewreview.domain.usecases.movie.GetTopRatedMovies
 import com.project.viewreview.domain.usecases.movie.GetTrendingMovies
@@ -12,6 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
+    private val getMovieUseCase: GetMovie,
     private val getTrendingMoviesUseCase: GetTrendingMovies,
     private val getPopularMoviesUseCase: GetPopularMovies,
     private val getTopRatedMoviesUseCase: GetTopRatedMovies,
@@ -25,6 +27,10 @@ class HomeViewModel @Inject constructor(
     val popularMovies = getPopularMoviesUseCase().cachedIn(viewModelScope)
     val topRatedMovies = getTopRatedMoviesUseCase().cachedIn(viewModelScope)
 
+//    suspend fun movie(movieBasic: MovieBasic): Movie {
+//        return getMovieUseCase(movieBasic)
+//    }
+
     fun onEvent(event: HomeEvent) {
         when (event) {
             is HomeEvent.UpdateScrollValue -> updateScrollValue(event.newValue)
@@ -32,10 +38,10 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun updateScrollValue(newValue: Int){
+    private fun updateScrollValue(newValue: Int) {
         state.value = state.value.copy(scrollValue = newValue)
     }
-    private fun updateMaxScrollingValue(newValue: Int){
+    private fun updateMaxScrollingValue(newValue: Int) {
         state.value = state.value.copy(maxScrollingValue = newValue)
     }
 }

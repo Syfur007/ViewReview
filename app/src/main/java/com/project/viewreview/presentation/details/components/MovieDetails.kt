@@ -1,5 +1,6 @@
 package com.project.viewreview.presentation.details.components
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -41,8 +42,8 @@ import com.gowtham.ratingbar.RatingBar
 import com.gowtham.ratingbar.RatingBarStyle
 import com.gowtham.ratingbar.StepSize
 import com.project.viewreview.R
-import com.project.viewreview.domain.model.FightClub
-import com.project.viewreview.domain.model.Movie
+import com.project.viewreview.data.remote.dto.FightClub
+import com.project.viewreview.data.remote.dto.Movie
 import com.project.viewreview.ui.theme.BackDropHeight
 import com.project.viewreview.ui.theme.MediumPadding
 import com.project.viewreview.ui.theme.VerySmallPadding
@@ -228,6 +229,7 @@ fun MovieDetails(movie: Movie, scrollState: LazyListState) {
 
 
 @Preview
+@Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun Test() {
     ViewReviewTheme {

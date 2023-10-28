@@ -2,6 +2,7 @@ package com.project.viewreview.data.local
 
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
+import com.project.viewreview.domain.model.BelongsToCollection
 import com.project.viewreview.domain.model.Genre
 import com.project.viewreview.domain.model.ProductionCompany
 import com.project.viewreview.domain.model.ProductionCountry
@@ -9,6 +10,17 @@ import com.project.viewreview.domain.model.SpokenLanguage
 
 @ProvidedTypeConverter
 class MovieTypeConverter {
+
+    @TypeConverter
+    fun belongsToCollectionToString(belongsToCollection: BelongsToCollection?): String {
+        return "${belongsToCollection?.id}-${belongsToCollection?.name}-${belongsToCollection?.poster_path}-${belongsToCollection?.backdrop_path}"
+    }
+
+    @TypeConverter
+    fun stringToBelongsToCollection(belongsToCollection: String): BelongsToCollection? {
+        val (id, name, poster_path, backdrop_path) = belongsToCollection.split("-")
+        return BelongsToCollection(id.toInt(), name, poster_path, backdrop_path)
+    }
 
     @TypeConverter
     fun genreListToString(genres: List<Genre>): String {

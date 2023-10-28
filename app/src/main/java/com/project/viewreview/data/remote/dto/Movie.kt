@@ -1,13 +1,18 @@
-package com.project.viewreview.domain.model
+package com.project.viewreview.data.remote.dto
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.project.viewreview.domain.model.BelongsToCollection
+import com.project.viewreview.domain.model.Genre
+import com.project.viewreview.domain.model.ProductionCompany
+import com.project.viewreview.domain.model.ProductionCountry
+import com.project.viewreview.domain.model.SpokenLanguage
 
 @Entity
 data class Movie(
     val adult: Boolean,
     val backdrop_path: String,
-    val belongs_to_collection: String?,
+    val belongs_to_collection: BelongsToCollection?,
     val budget: Int,
     val genres: List<Genre>,
     val homepage: String,

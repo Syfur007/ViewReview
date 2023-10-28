@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -22,8 +23,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.project.viewreview.R
-import com.project.viewreview.domain.model.Movie
-import com.project.viewreview.domain.model.MovieResponse
 import com.project.viewreview.presentation.bookmark.BookmarkScreen
 import com.project.viewreview.presentation.bookmark.BookmarkViewModel
 import com.project.viewreview.presentation.details.DetailsScreen
@@ -35,6 +34,7 @@ import com.project.viewreview.presentation.navigation.components.BottomNavigatio
 import com.project.viewreview.presentation.navigation.components.MovieBottomNavigation
 import com.project.viewreview.presentation.search.SearchScreen
 import com.project.viewreview.presentation.search.SearchViewModel
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -116,6 +116,7 @@ fun MovieNavigator(
                 val trendingMovies = viewModel.trendingMovies.collectAsLazyPagingItems()
                 val topRatedMovies = viewModel.topRatedMovies.collectAsLazyPagingItems()
                 val movies = listOf(trendingMovies, topRatedMovies, popularMovies)
+
                 HomeScreen(
                     moviesList = movies,
                     navigateToSearch = {
@@ -124,15 +125,37 @@ fun MovieNavigator(
                             route = Route.SearchScreen.route
                         )
                     },
-                    navigateToDetails = { movie ->
+                    navigateToDetails = { movieId ->
                         navigateToDetails(
                             navController = navController,
-                            movie = movie
+                            movieId = movieId
                         )
                     },
                     event = viewModel::onEvent,
                     state = viewModel.state.value
                 )
+            }
+
+            composable(route = Route.MovieDetailScreen.route) {
+                val viewModel: DetailsViewModel = hiltViewModel()
+                val scope = rememberCoroutineScope()
+                val selectedMovie by viewModel.selectedMovie
+
+
+                navController.previousBackStackEntry?.savedStateHandle?.get<Int?>("movieId")
+                    ?.let { movieId ->
+                        scope.launch {
+                            viewModel.selectMovie(movieId)
+                        }
+                        selectedMovie?.let { movie ->
+                            DetailsScreen(
+                                movie = movie,
+                                onEvent = viewModel::onEvent,
+                                navigateUp = { navController.navigateUp() },
+                                sideEffect = viewModel.sideEffect
+                            )
+                        }
+                    }
             }
 
             composable(route = Route.SearchScreen.route) {
@@ -142,27 +165,13 @@ fun MovieNavigator(
                 SearchScreen(
                     state = state,
                     event = viewModel::onEvent,
-                    navigateToDetails = { movie ->
+                    navigateToDetails = { movieId ->
                         navigateToDetails(
                             navController = navController,
-                            movie = movie
+                            movieId = movieId
                         )
                     }
                 )
-            }
-
-            composable(route = Route.MovieNavigatorScreen.route) {
-                val viewModel: DetailsViewModel = hiltViewModel()
-                navController.previousBackStackEntry?.savedStateHandle?.get<Movie?>("movie")
-                    ?.let { movie ->
-                        DetailsScreen(
-                            movie = movie,
-                            onEvent = viewModel::onEvent,
-                            navigateUp = { navController.navigateUp() },
-                            sideEffect = viewModel.sideEffect
-                        )
-                    }
-
             }
 
             composable(route = Route.BookmarkScreen.route) {
@@ -171,10 +180,10 @@ fun MovieNavigator(
                 OnBackClickStateSaver(navController = navController)
                 BookmarkScreen(
                     state = state,
-                    navigateToDetails = { movie ->
+                    navigateToDetails = { movieId ->
                         navigateToDetails(
                             navController = navController,
-                            movie = movie
+                            movieId = movieId
                         )
                     }
                 )
@@ -236,15 +245,8 @@ private fun navigateToTab(navController: NavController, route: String) {
     }
 }
 
-private fun navigateToDetails(navController: NavController, movie: MovieResponse) {
-    navController.currentBackStackEntry?.savedStateHandle?.set("movie", movie)
-    navController.navigate(
-        route = Route.MovieDetailScreen.route
-    )
-}
-
-private fun navigateToDetails(navController: NavController, movie: Movie) {
-    navController.currentBackStackEntry?.savedStateHandle?.set("movie", movie)
+private fun navigateToDetails(navController: NavController, movieId: Int) {
+    navController.currentBackStackEntry?.savedStateHandle?.set("movieId", movieId)
     navController.navigate(
         route = Route.MovieDetailScreen.route
     )
