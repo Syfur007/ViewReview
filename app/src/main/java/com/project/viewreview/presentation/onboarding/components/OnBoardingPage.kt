@@ -13,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -50,7 +49,7 @@ fun OnBoardingPage(
                     .padding(horizontal = SemiLargePadding),
                 style = MaterialTheme.typography.displaySmall,
                 fontWeight = FontWeight.Bold,
-                color = colorResource(id = R.color.display_small)
+                color = MaterialTheme.colorScheme.onBackground
             )
             Spacer(modifier = Modifier.height(SmallPadding))
             Text(
@@ -59,7 +58,7 @@ fun OnBoardingPage(
                     .padding(horizontal = SemiLargePadding),
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Bold,
-                color = colorResource(id = R.color.text_medium)
+                color = MaterialTheme.colorScheme.onSecondary
             )
         }
     }
