@@ -49,6 +49,7 @@ class DetailsViewModel @Inject constructor(
 
     private fun postReview(movieId: Int, review: Review) {
         reviewRepository.postReview(movieId, review)
+        fetchReviews(movieId)
     }
 
     var reviews = mutableStateOf<List<Review>>(emptyList())
@@ -88,7 +89,7 @@ class DetailsViewModel @Inject constructor(
                         event.movieId,
                         review = Review(
                             reviewText = event.review,
-                            authorId = FirebaseAuth.getInstance().currentUser!!.uid
+                            authorId = FirebaseAuth.getInstance().currentUser!!.email!!
                         )
                     )
                 }

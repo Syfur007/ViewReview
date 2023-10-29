@@ -1,12 +1,15 @@
 package com.project.viewreview.presentation.details.components
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -42,6 +45,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.google.accompanist.insets.LocalWindowInsets
+import com.google.firebase.auth.FirebaseAuth
 import com.gowtham.ratingbar.RatingBar
 import com.gowtham.ratingbar.RatingBarStyle
 import com.gowtham.ratingbar.StepSize
@@ -51,8 +55,10 @@ import com.project.viewreview.data.remote.dto.FightClubCredits
 import com.project.viewreview.data.remote.dto.Movie
 import com.project.viewreview.data.remote.dto.MovieCredits
 import com.project.viewreview.data.remote.dto.Review
+import com.project.viewreview.presentation.common.MovieButton
 import com.project.viewreview.ui.theme.BackDropHeight
 import com.project.viewreview.ui.theme.MediumPadding
+import com.project.viewreview.ui.theme.SmallPadding
 import com.project.viewreview.ui.theme.VerySmallPadding
 import com.project.viewreview.ui.theme.ViewReviewTheme
 import com.project.viewreview.util.Constants.IMAGE_ORIGINAL_URL
@@ -65,6 +71,7 @@ fun MovieDetails(
     movieCredits: MovieCredits,
     movieReviews: List<Review>,
     onReviewPost: (String) -> Unit,
+    onSignInClick: () -> Unit,
     scrollState: LazyListState,
 ) {
 
@@ -76,6 +83,7 @@ fun MovieDetails(
 
 
     var reviewText by remember { mutableStateOf("") }
+    val context = LocalContext.current
 
 
     LazyColumn(
@@ -283,8 +291,37 @@ fun MovieDetails(
 
                 Spacer(modifier = Modifier.padding(top = MediumPadding))
 
-                ReviewField(reviewText = reviewText, onReviewTextChange = { reviewText = it }) {
-                    onReviewPost(reviewText)
+
+                if (FirebaseAuth.getInstance().currentUser != null) {
+                    ReviewField(reviewText = reviewText,
+                        onReviewTextChange = { reviewText = it },
+                        onReviewPost = {
+                            onReviewPost(reviewText)
+                            Toast.makeText(
+                                context,
+                                "Review Posted!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            reviewText = ""
+                        }
+                    )
+                } else {
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(MediumPadding),
+                        horizontalArrangement = Arrangement.End,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(text = "Login To Post Reviews")
+
+                        Spacer(modifier = Modifier.padding(SmallPadding))
+
+                        MovieButton(
+                            text = "Sign In",
+                            onClick = { onSignInClick() }
+                        )
+                    }
                 }
             }
         }
@@ -310,6 +347,7 @@ fun Test() {
             movieCredits = FightClubCredits,
             movieReviews = emptyList(),
             onReviewPost = {},
+            onSignInClick = {},
             scrollState = rememberLazyListState()
         )
     }

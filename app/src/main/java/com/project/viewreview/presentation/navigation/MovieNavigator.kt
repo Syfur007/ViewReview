@@ -158,6 +158,12 @@ fun MovieNavigator(
                                     movieCredits = credits,
                                     movieReviews = movieReviews,
                                     onEvent = viewModel::onEvent,
+                                    onSignInClick = {
+                                        navigateToScreen(
+                                            navController = rootNavController,
+                                            route = Route.AuthNavigation.route
+                                        )
+                                    },
                                     navigateUp = { navController.navigateUp() },
                                     sideEffect = viewModel.sideEffect
                                 )

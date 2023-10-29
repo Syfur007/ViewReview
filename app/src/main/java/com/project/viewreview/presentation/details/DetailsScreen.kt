@@ -31,6 +31,7 @@ fun DetailsScreen(
     movieReviews: List<Review>,
     onEvent: (DetailsEvent) -> Unit,
     sideEffect: UIComponent?,
+    onSignInClick: () -> Unit,
     navigateUp: () -> Unit,
 ) {
     val context = LocalContext.current
@@ -63,6 +64,7 @@ fun DetailsScreen(
             onReviewPost = { reviewText: String ->
                 onEvent(DetailsEvent.PostReview(movie.id, reviewText))
             },
+            onSignInClick = { onSignInClick() },
             scrollState = scrollState
         )
 
@@ -90,6 +92,7 @@ fun Test() {
             movie = FightClub,
             movieCredits = FightClubCredits,
             movieReviews = emptyList(),
+            onSignInClick = {},
             onEvent = {},
             navigateUp = {},
             sideEffect = null

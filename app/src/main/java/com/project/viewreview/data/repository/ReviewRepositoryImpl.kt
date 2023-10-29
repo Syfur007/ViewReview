@@ -11,16 +11,16 @@ class ReviewRepositoryImpl : ReviewRepository {
     private val db = FirebaseFirestore.getInstance()
 
     override fun postReview(movieId: Int, review: Review) {
-        db.collection("reviews")
+        db.collection("movieReviews")
             .document(movieId.toString())
-            .collection("movieReviews")
+            .collection("reviews")
             .add(review)
     }
 
     override fun getReviews(movieId: Int): Task<QuerySnapshot> {
-        return db.collection("reviews")
+        return db.collection("movieReviews")
             .document(movieId.toString())
-            .collection("movieReviews")
+            .collection("reviews")
             .get()
     }
 }
