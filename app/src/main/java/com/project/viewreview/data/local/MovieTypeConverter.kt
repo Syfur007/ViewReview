@@ -18,6 +18,7 @@ class MovieTypeConverter {
 
     @TypeConverter
     fun stringToBelongsToCollection(belongsToCollection: String): BelongsToCollection? {
+        if (belongsToCollection == "null-null-null-null") return null
         val (id, name, poster_path, backdrop_path) = belongsToCollection.split("-")
         return BelongsToCollection(id.toInt(), name, poster_path, backdrop_path)
     }
@@ -37,13 +38,13 @@ class MovieTypeConverter {
 
     @TypeConverter
     fun productionCompaniesListToString(productionCompanies: List<ProductionCompany>): String {
-        return productionCompanies.joinToString(separator = ",") { "${it.id}-${it.logo_path}-${it.name}-${it.origin_country}" }
+        return productionCompanies.joinToString(separator = ":") { "${it.id}-${it.logo_path}-${it.name}-${it.origin_country}" }
     }
 
     @TypeConverter
     fun stringToProductionCompaniesList(productionCompanies: String): List<ProductionCompany> {
-        return productionCompanies.split(",").map {
-            val (id, logo_path, name, origin_country) = it.split(":")
+        return productionCompanies.split(":").map {
+            val (id, logo_path, name, origin_country) = it.split("-")
             ProductionCompany(id.toInt(), logo_path, name, origin_country)
         }
     }

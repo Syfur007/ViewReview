@@ -45,13 +45,13 @@ fun DetailsTopBar(
         title = {},
         navigationIcon = {
             IconButton(
-                onClick = onBackClick,
+                onClick = { onBackClick() },
             ) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
                     contentDescription = null,
                     Modifier
-                        .background(color = Black.copy(alpha = 0.25f), shape = CircleShape)
+                        .background(color = Black.copy(alpha = 0.3f), shape = CircleShape)
                         .padding(7.dp),
                     tint = MaterialTheme.colorScheme.primary,
                 )
@@ -60,7 +60,7 @@ fun DetailsTopBar(
         actions = {
 
             IconButton(
-                onClick = onBookmarkClick
+                onClick = { onBookmarkClick() }
             ) {
                 Icon(
                     painter = painterResource(
@@ -68,19 +68,19 @@ fun DetailsTopBar(
                     ),
                     contentDescription = null,
                     Modifier
-                        .background(color = Black.copy(alpha = 0.25f), shape = CircleShape)
+                        .background(color = Black.copy(alpha = 0.3f), shape = CircleShape)
                         .padding(5.dp),
                     tint = MaterialTheme.colorScheme.primary,
                 )
             }
             IconButton(
-                onClick = onShareClick
+                onClick = { onShareClick() }
             ) {
                 Icon(
                     imageVector = Icons.Default.Share,
                     contentDescription = null,
                     Modifier
-                        .background(color = Black.copy(alpha = 0.25f), shape = CircleShape)
+                        .background(color = Black.copy(alpha = 0.3f), shape = CircleShape)
                         .padding(5.dp),
                     tint = MaterialTheme.colorScheme.primary,
                 )
