@@ -1,7 +1,6 @@
 package com.project.viewreview.presentation.onboarding.components
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -12,13 +11,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.project.viewreview.R
 import com.project.viewreview.presentation.onboarding.Page
-import com.project.viewreview.ui.theme.MediumPadding
 import com.project.viewreview.ui.theme.SemiLargePadding
 import com.project.viewreview.ui.theme.SmallPadding
 import com.project.viewreview.ui.theme.ViewReviewTheme
@@ -29,15 +25,7 @@ fun OnBoardingPage(
     page: Page
 ) {
     Column(modifier) {
-        Image(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(0.6f),
-            painter = painterResource(id = page.image),
-            contentDescription = null,
-            contentScale = ContentScale.Crop
-        )
-        Spacer(modifier = Modifier.height(MediumPadding))
+        Spacer(modifier = Modifier.fillMaxHeight(0.45f))
         Column(
             modifier = Modifier
                 .fillMaxWidth()
