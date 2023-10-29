@@ -141,6 +141,7 @@ fun MovieNavigator(
                 val scope = rememberCoroutineScope()
                 val selectedMovie by viewModel.selectedMovie
                 val movieCredits by viewModel.movieCredits
+                val movieReviews by viewModel.reviews
 
 
                 navController.previousBackStackEntry?.savedStateHandle?.get<Int?>("movieId")
@@ -148,12 +149,14 @@ fun MovieNavigator(
                         scope.launch {
                             viewModel.selectMovie(movieId)
                             viewModel.getMovieCredits(movieId)
+                            viewModel.fetchReviews(movieId)
                         }
                         selectedMovie?.let { movie ->
                             movieCredits?.let { credits ->
                                 DetailsScreen(
                                     movie = movie,
                                     movieCredits = credits,
+                                    movieReviews = movieReviews,
                                     onEvent = viewModel::onEvent,
                                     navigateUp = { navController.navigateUp() },
                                     sideEffect = viewModel.sideEffect

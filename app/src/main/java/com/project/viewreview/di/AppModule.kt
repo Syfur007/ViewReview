@@ -8,7 +8,9 @@ import com.project.viewreview.data.local.MovieDatabase
 import com.project.viewreview.data.local.MovieTypeConverter
 import com.project.viewreview.data.remote.MovieApi
 import com.project.viewreview.data.repository.AuthRepositoryImpl
+import com.project.viewreview.data.repository.ReviewRepositoryImpl
 import com.project.viewreview.domain.repository.AuthRepository
+import com.project.viewreview.domain.repository.ReviewRepository
 import com.project.viewreview.util.Constants.API_BASE_URL
 import com.project.viewreview.util.Constants.MOVIE_DATABASE_NAME
 import dagger.Module
@@ -34,6 +36,13 @@ object AppModule {
     @Singleton
     fun provideAuthRepository(firebaseAuth: FirebaseAuth): AuthRepository {
         return AuthRepositoryImpl(firebaseAuth)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideReviewRepository(): ReviewRepository {
+        return ReviewRepositoryImpl()
     }
 
 

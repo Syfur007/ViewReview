@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -19,7 +20,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -47,6 +50,7 @@ import com.project.viewreview.data.remote.dto.FightClub
 import com.project.viewreview.data.remote.dto.FightClubCredits
 import com.project.viewreview.data.remote.dto.Movie
 import com.project.viewreview.data.remote.dto.MovieCredits
+import com.project.viewreview.data.remote.dto.Review
 import com.project.viewreview.ui.theme.BackDropHeight
 import com.project.viewreview.ui.theme.MediumPadding
 import com.project.viewreview.ui.theme.VerySmallPadding
@@ -59,7 +63,9 @@ import kotlin.math.min
 fun MovieDetails(
     movie: Movie,
     movieCredits: MovieCredits,
-    scrollState: LazyListState
+    movieReviews: List<Review>,
+    onReviewPost: (String) -> Unit,
+    scrollState: LazyListState,
 ) {
 
     val maxOffset =
@@ -67,6 +73,9 @@ fun MovieDetails(
     val currentOffset by remember { derivedStateOf { scrollState.firstVisibleItemScrollOffset } }
     val offset = min(currentOffset, maxOffset)
     val offsetProgress = max(0f, offset * 3f - 2f * maxOffset) / maxOffset
+
+
+    var reviewText by remember { mutableStateOf("") }
 
 
     LazyColumn(
@@ -208,7 +217,10 @@ fun MovieDetails(
 
                     Spacer(modifier = Modifier.padding(start = VerySmallPadding))
 
-                    Text(text = "${movie.runtime} min", color = MaterialTheme.colorScheme.onBackground)
+                    Text(
+                        text = "${movie.runtime} min",
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
 
                 }
 
@@ -248,7 +260,7 @@ fun MovieDetails(
 
                 Text(
                     text = "Cast",
-                    fontSize = 20.sp,
+                    fontSize = 22.sp,
                     color = MaterialTheme.colorScheme.onBackground,
                     modifier = Modifier.padding(top = VerySmallPadding),
                 )
@@ -264,16 +276,24 @@ fun MovieDetails(
 
                 Text(
                     text = "Reviews",
-                    fontSize = 20.sp,
+                    fontSize = 22.sp,
                     color = MaterialTheme.colorScheme.onBackground,
                     modifier = Modifier.padding(top = VerySmallPadding),
                 )
 
                 Spacer(modifier = Modifier.padding(top = MediumPadding))
 
-
+                ReviewField(reviewText = reviewText, onReviewTextChange = { reviewText = it }) {
+                    onReviewPost(reviewText)
+                }
             }
         }
+
+        items(movieReviews) { review ->
+            ReviewCard(review = review)
+        }
+
+
     }
 
 
@@ -285,6 +305,12 @@ fun MovieDetails(
 @Composable
 fun Test() {
     ViewReviewTheme {
-        MovieDetails(movie = FightClub, movieCredits = FightClubCredits, scrollState = rememberLazyListState())
+        MovieDetails(
+            movie = FightClub,
+            movieCredits = FightClubCredits,
+            movieReviews = emptyList(),
+            onReviewPost = {},
+            scrollState = rememberLazyListState()
+        )
     }
 }

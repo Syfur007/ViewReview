@@ -17,6 +17,7 @@ import com.project.viewreview.data.remote.dto.FightClub
 import com.project.viewreview.data.remote.dto.FightClubCredits
 import com.project.viewreview.data.remote.dto.Movie
 import com.project.viewreview.data.remote.dto.MovieCredits
+import com.project.viewreview.data.remote.dto.Review
 import com.project.viewreview.presentation.details.components.DetailsTopBar
 import com.project.viewreview.presentation.details.components.MovieDetails
 import com.project.viewreview.ui.theme.ViewReviewTheme
@@ -27,6 +28,7 @@ import com.project.viewreview.util.UIComponent
 fun DetailsScreen(
     movie: Movie,
     movieCredits: MovieCredits,
+    movieReviews: List<Review>,
     onEvent: (DetailsEvent) -> Unit,
     sideEffect: UIComponent?,
     navigateUp: () -> Unit,
@@ -35,11 +37,12 @@ fun DetailsScreen(
 
     LaunchedEffect(key1 = sideEffect) {
         sideEffect?.let {
-            when(sideEffect){
-                is UIComponent.Toast ->{
+            when (sideEffect) {
+                is UIComponent.Toast -> {
                     Toast.makeText(context, sideEffect.message, Toast.LENGTH_SHORT).show()
                     onEvent(DetailsEvent.RemoveSideEffect)
                 }
+
                 else -> Unit
             }
         }
@@ -53,7 +56,15 @@ fun DetailsScreen(
     ) {
 
         val scrollState = rememberLazyListState()
-        MovieDetails(movie = movie, movieCredits = movieCredits, scrollState = scrollState)
+        MovieDetails(
+            movie = movie,
+            movieCredits = movieCredits,
+            movieReviews = movieReviews,
+            onReviewPost = { reviewText: String ->
+                onEvent(DetailsEvent.PostReview(movie.id, reviewText))
+            },
+            scrollState = scrollState
+        )
 
         DetailsTopBar(
             onBookmarkClick = { onEvent(DetailsEvent.UpsertDeleteMovie(movie)) },
@@ -75,6 +86,13 @@ fun DetailsScreen(
 @Composable
 fun Test() {
     ViewReviewTheme {
-        DetailsScreen(movie = FightClub, movieCredits = FightClubCredits, onEvent = {}, navigateUp = {}, sideEffect = null)
+        DetailsScreen(
+            movie = FightClub,
+            movieCredits = FightClubCredits,
+            movieReviews = emptyList(),
+            onEvent = {},
+            navigateUp = {},
+            sideEffect = null
+        )
     }
 }

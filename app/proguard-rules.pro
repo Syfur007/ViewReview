@@ -19,3 +19,9 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-keep class com.project.viewreview.data.* { *; }
+-keep class com.project.viewreview.domain.* { *; }
+
+-keepclassmembers class com.project.viewreview.data.remote.dto.Review {
+    <init>(...);
+}
