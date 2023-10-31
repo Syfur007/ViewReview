@@ -28,7 +28,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -57,6 +56,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.project.viewreview.R
 import com.project.viewreview.presentation.authentication.components.EmailField
 import com.project.viewreview.presentation.authentication.components.PasswordField
+import com.project.viewreview.presentation.common.InfinityLoading
 import com.project.viewreview.ui.theme.MediumPadding
 import com.project.viewreview.ui.theme.SemiLargePadding
 import com.project.viewreview.ui.theme.SmallPadding
@@ -100,7 +100,7 @@ fun SignInScreen(
                 modifier = Modifier.size(200.dp),
                 contentAlignment = Alignment.Center
             ) {
-                CircularProgressIndicator()
+                InfinityLoading()
             }
         }
     }
