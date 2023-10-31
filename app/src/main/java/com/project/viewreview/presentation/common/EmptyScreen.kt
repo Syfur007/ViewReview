@@ -105,7 +105,7 @@ fun parseErrorMessage(error: LoadState.Error?): String {
 
         else -> {
             Log.d("Error", error?.error.toString())
-            "Unknown Error."
+            error?.error?.message ?: "Unknown Error"
         }
     }
 }

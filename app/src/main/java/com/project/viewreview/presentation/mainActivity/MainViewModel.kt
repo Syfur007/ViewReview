@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val readAppEntry: ReadAppEntry
+    readAppEntry: ReadAppEntry
 ) : ViewModel() {
 
     private val _splashCondition = mutableStateOf(true)
@@ -38,7 +38,7 @@ class MainViewModel @Inject constructor(
             } else {
                 _startDestination.value = Route.AppStartNavigation.route
             }
-            delay(1000) //Without this delay, the onBoarding screen will show for a momentum.
+            delay(600) //Without this delay, the onBoarding screen will show for a momentum.
             _splashCondition.value = false
         }.launchIn(viewModelScope)
     }
