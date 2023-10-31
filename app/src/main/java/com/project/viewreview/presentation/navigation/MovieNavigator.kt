@@ -22,6 +22,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.google.firebase.auth.FirebaseAuth
 import com.project.viewreview.R
 import com.project.viewreview.presentation.bookmark.BookmarkScreen
 import com.project.viewreview.presentation.bookmark.BookmarkViewModel
@@ -50,6 +51,7 @@ fun MovieNavigator(
             BottomNavigationItem(icon = R.drawable.ic_menu, text = "Menu")
         )
     }
+    val firebaseAuth = FirebaseAuth.getInstance()
     val context = LocalContext.current
     val navController = rememberNavController()
     val backStackState = navController.currentBackStackEntryAsState().value
@@ -218,6 +220,15 @@ fun MovieNavigator(
                     onChangePasswordClick = {
                         Toast.makeText(context, "Screen not Created Yet!", Toast.LENGTH_SHORT)
                             .show()
+                    },
+                    onLogoutClick = {
+                        firebaseAuth.signOut().also {
+                            Toast.makeText(context, "Logged out!", Toast.LENGTH_SHORT).show()
+                            navigateToScreen(
+                                navController = rootNavController,
+                                route = Route.AuthNavigation.route
+                            )
+                        }
                     },
                     onAboutAppClick = {
                         Toast.makeText(context, "Screen not Created Yet!", Toast.LENGTH_SHORT)

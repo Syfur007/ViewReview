@@ -66,6 +66,7 @@ class AuthViewModel @Inject constructor(
             when (result) {
                 is DataState.Success -> {
                     _authState.send(AuthState(isSuccessful = result.data?.user?.email))
+                    signInUserWithEmailAndPassword(email, password)
                 }
 
                 is DataState.Loading -> {
@@ -78,6 +79,4 @@ class AuthViewModel @Inject constructor(
             }
         }
     }
-
-
 }

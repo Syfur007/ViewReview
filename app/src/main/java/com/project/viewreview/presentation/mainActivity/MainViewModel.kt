@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.project.viewreview.domain.usecases.app_entry.ReadAppEntry
 import com.project.viewreview.presentation.navigation.Route
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -37,7 +38,7 @@ class MainViewModel @Inject constructor(
             } else {
                 _startDestination.value = Route.AppStartNavigation.route
             }
-//            delay(100) //Without this delay, the onBoarding screen will show for a momentum.
+            delay(600) //Without this delay, the onBoarding screen will show for a momentum.
             _splashCondition.value = false
         }.launchIn(viewModelScope)
     }

@@ -1,7 +1,6 @@
 package com.project.viewreview.presentation.menu
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,7 +23,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
@@ -42,6 +40,7 @@ fun MenuScreen(
     onSignInClick: () -> Unit,
     onMyReviewsClick: () -> Unit,
     onChangePasswordClick: () -> Unit,
+    onLogoutClick: () -> Unit,
     onAboutAppClick: () -> Unit,
     onTermsAndConditionsClick: () -> Unit,
     onPrivacyPolicyClick: () -> Unit,
@@ -49,7 +48,6 @@ fun MenuScreen(
 
     val firebaseAuth = FirebaseAuth.getInstance()
     val currentUser by remember{ mutableStateOf(firebaseAuth.currentUser) }
-    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -65,11 +63,7 @@ fun MenuScreen(
                 currentUser = currentUser!!,
                 onMyReviewsClick = { onMyReviewsClick() },
                 onChangePasswordClick = { onChangePasswordClick() },
-                onLogoutClick = {
-                    firebaseAuth.signOut().also {
-                        Toast.makeText(context, "Logged out!", Toast.LENGTH_SHORT).show()
-                    }
-                }
+                onLogoutClick = { onLogoutClick() }
             )
         } else {
             Row(
@@ -131,6 +125,7 @@ fun MenuScreenPreview() {
             onSignInClick = {},
             onMyReviewsClick = {},
             onChangePasswordClick = {},
+            onLogoutClick = {},
             onAboutAppClick = {},
             onTermsAndConditionsClick = {},
             onPrivacyPolicyClick = {}

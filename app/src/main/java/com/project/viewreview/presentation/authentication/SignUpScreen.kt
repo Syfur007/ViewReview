@@ -185,6 +185,7 @@ fun SignUpScreen(
                         if (password == passwordConfirm) {
                             scope.launch {
                                 viewModel.signUpUserWithEmailAndPassword(email, password)
+                                exitAuthentication()
                             }
                         } else {
                             Toast.makeText(context, "Password does not match", Toast.LENGTH_LONG)
