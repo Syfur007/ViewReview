@@ -11,8 +11,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,12 +51,15 @@ fun ReviewField(
                 .fillMaxWidth()
                 .height(100.dp),
             shape = MaterialTheme.shapes.small,
-            colors = TextFieldDefaults.outlinedTextFieldColors(
+            colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = MaterialTheme.colorScheme.primary,
                 unfocusedBorderColor = MaterialTheme.colorScheme.primary,
-                containerColor = MaterialTheme.colorScheme.background,
-                placeholderColor = MaterialTheme.colorScheme.onBackground,
-                textColor = MaterialTheme.colorScheme.onBackground,
+                focusedContainerColor = MaterialTheme.colorScheme.background,
+                unfocusedContainerColor = MaterialTheme.colorScheme.background,
+                focusedPlaceholderColor = MaterialTheme.colorScheme.onBackground,
+                unfocusedPlaceholderColor = MaterialTheme.colorScheme.onBackground,
+                focusedTextColor = MaterialTheme.colorScheme.onBackground,
+                unfocusedTextColor = MaterialTheme.colorScheme.onBackground,
             ),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Email,
