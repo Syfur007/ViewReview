@@ -1,17 +1,8 @@
 package com.project.viewreview.presentation.navigation
 
-import androidx.navigation.NamedNavArgument
-
 sealed class Route(
-    val route: String,
-    val arguments: List<NamedNavArgument> = emptyList()
+    val route: String
 ) {
-
-    object AppStartNavigation: Route("appStartNavigation")
-
-    object OnBoardingScreen : Route("onBoardingScreen")
-
-
     object AuthNavigation : Route("authNavigation")
 
     object SignInScreen : Route("signInScreen")

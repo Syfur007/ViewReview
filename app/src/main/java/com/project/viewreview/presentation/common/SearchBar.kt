@@ -12,7 +12,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -32,7 +31,6 @@ import com.project.viewreview.R
 import com.project.viewreview.ui.theme.IconSize
 import com.project.viewreview.ui.theme.ViewReviewTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchBar(
     modifier: Modifier = Modifier,

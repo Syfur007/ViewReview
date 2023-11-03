@@ -59,12 +59,6 @@ fun AuthNavigator(
 
 private fun navigateToScreen(navController: NavController, route: String) {
     navController.navigate(route) {
-//        navController.graph.startDestinationRoute?.let { currentRoute ->
-//            popUpTo(currentRoute) {
-//                saveState = true
-////                inclusive = true
-//            }
-//        }
         launchSingleTop = true
         restoreState = true
     }

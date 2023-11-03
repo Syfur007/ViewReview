@@ -52,7 +52,7 @@ fun MoviesList(
             horizontalArrangement = Arrangement.spacedBy(MediumPadding)
         ) {
             items(movies.itemCount) {
-                movies[it]?.let {movie ->
+                movies[it]?.let { movie ->
                     MovieCard(movie = movie, onClick = { onClick(movie.id) })
                 }
             }

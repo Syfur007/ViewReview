@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -56,7 +57,6 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.project.viewreview.R
 import com.project.viewreview.presentation.authentication.components.EmailField
 import com.project.viewreview.presentation.authentication.components.PasswordField
-import com.project.viewreview.presentation.common.InfinityLoading
 import com.project.viewreview.ui.theme.MediumPadding
 import com.project.viewreview.ui.theme.SemiLargePadding
 import com.project.viewreview.ui.theme.SmallPadding
@@ -100,7 +100,7 @@ fun SignInScreen(
                 modifier = Modifier.size(200.dp),
                 contentAlignment = Alignment.Center
             ) {
-                InfinityLoading()
+                CircularProgressIndicator()
             }
         }
     }
@@ -114,7 +114,10 @@ fun SignInScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Row(Modifier.fillMaxWidth().padding(horizontal = MediumPadding, vertical = SmallPadding), horizontalArrangement = Arrangement.End) {
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = MediumPadding, vertical = SmallPadding), horizontalArrangement = Arrangement.End) {
             IconButton(onClick = { exitAuthentication() }) {
                 Icon(
                     imageVector = Icons.Default.Close,

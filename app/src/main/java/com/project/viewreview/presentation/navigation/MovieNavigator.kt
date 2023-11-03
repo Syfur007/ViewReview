@@ -4,7 +4,6 @@ import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -37,7 +36,6 @@ import com.project.viewreview.presentation.search.SearchScreen
 import com.project.viewreview.presentation.search.SearchViewModel
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MovieNavigator(
     rootNavController: NavHostController
@@ -260,8 +258,8 @@ fun OnBackClickStateSaver(navController: NavController) {
 
 private fun navigateToTab(navController: NavController, route: String) {
     navController.navigate(route) {
-        navController.graph.startDestinationRoute?.let { screen_route ->
-            popUpTo(screen_route) {
+        navController.graph.startDestinationRoute?.let { screenRoute ->
+            popUpTo(screenRoute) {
                 saveState = true
             }
         }
